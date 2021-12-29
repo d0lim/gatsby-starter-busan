@@ -1,115 +1,128 @@
-const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const path = require(`path`);
+const { isFuture, format } = require("date-fns");
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
 
   // Define a template for blog post
-  const blogPost = path.resolve(`./src/templates/blog-post.js`)
+  const blogPost = path.resolve(`./src/templates/blog-post.js`);
 
   // Get all markdown blog posts sorted by date
-  const result = await graphql(
-    `
-      {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: ASC }
-          limit: 1000
-        ) {
-          nodes {
+  const result = await graphql(`
+    {
+      allSanityPost(
+        filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
+        sort: { fields: publishedAt }
+      ) {
+        edges {
+          node {
             id
-            fields {
-              slug
+            publishedAt
+            slug {
+              current
             }
           }
         }
       }
-    `
-  )
+    }
+  `);
 
   if (result.errors) {
     reporter.panicOnBuild(
       `There was an error loading your blog posts`,
       result.errors
-    )
-    return
+    );
+    return;
   }
 
-  const posts = result.data.allMarkdownRemark.nodes
-
+  const postEdges = (result.data.allSanityPost || {}).edges || [];
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
-
-  if (posts.length > 0) {
-    posts.forEach((post, index) => {
-      const previousPostId = index === 0 ? null : posts[index - 1].id
-      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
+  postEdges
+    .filter(edge => !isFuture(new Date(edge.node.publishedAt)))
+    .forEach(edge => {
+      const { id, slug = {}, publishedAt } = edge.node;
+      const dateSegment = format(new Date(publishedAt), "yyyy/MM");
+      const path = `/blog/${dateSegment}/${slug.current}/`;
 
       createPage({
-        path: post.fields.slug,
+        path,
         component: blogPost,
-        context: {
-          id: post.id,
-          previousPostId,
-          nextPostId,
-        },
-      })
-    })
-  }
-}
+        context: { id },
+      });
+    });
+  //   if (posts.length > 0) {
+  //     posts.forEach((post, index) => {
+  //       const previousPostId = index === 0 ? null : posts[index - 1].id;
+  //       const nextPostId =
+  //         index === posts.length - 1 ? null : posts[index + 1].id;
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+  //       createPage({
+  //         path: post.fields.slug,
+  //         component: blogPost,
+  //         context: {
+  //           id: post.id,
+  //           previousPostId,
+  //           nextPostId,
+  //         },
+  //       });
+  //     });
+  //   }
+};
 
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+// exports.onCreateNode = ({ node, actions, getNode }) => {
+//   const { createNodeField } = actions;
 
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
-  }
-}
+//   if (node.internal.type === `MarkdownRemark`) {
+//     const value = createFilePath({ node, getNode });
 
-exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+//     createNodeField({
+//       name: `slug`,
+//       node,
+//       value,
+//     });
+//   }
+// };
 
-  // Explicitly define the siteMetadata {} object
-  // This way those will always be defined even if removed from gatsby-config.js
+// exports.createSchemaCustomization = ({ actions }) => {
+//   const { createTypes } = actions;
 
-  // Also explicitly define the Markdown frontmatter
-  // This way the "MarkdownRemark" queries will return `null` even when no
-  // blog posts are stored inside "content/blog" instead of returning an error
-  createTypes(`
-    type SiteSiteMetadata {
-      author: Author
-      siteUrl: String
-      social: Social
-    }
+//   // Explicitly define the siteMetadata {} object
+//   // This way those will always be defined even if removed from gatsby-config.js
 
-    type Author {
-      name: String
-      summary: String
-    }
+//   // Also explicitly define the Markdown frontmatter
+//   // This way the "MarkdownRemark" queries will return `null` even when no
+//   // blog posts are stored inside "content/blog" instead of returning an error
+//   createTypes(`
+//     type SiteSiteMetadata {
+//       author: Author
+//       siteUrl: String
+//       social: Social
+//     }
 
-    type Social {
-      twitter: String
-    }
+//     type Author {
+//       name: String
+//       summary: String
+//     }
 
-    type MarkdownRemark implements Node {
-      frontmatter: Frontmatter
-      fields: Fields
-    }
+//     type Social {
+//       twitter: String
+//     }
 
-    type Frontmatter {
-      title: String
-      description: String
-      date: Date @dateformat
-    }
+//     type MarkdownRemark implements Node {
+//       frontmatter: Frontmatter
+//       fields: Fields
+//     }
 
-    type Fields {
-      slug: String
-    }
-  `)
-}
+//     type Frontmatter {
+//       title: String
+//       description: String
+//       date: Date @dateformat
+//     }
+
+//     type Fields {
+//       slug: String
+//     }
+//   `);
+// };
