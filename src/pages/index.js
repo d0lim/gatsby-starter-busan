@@ -25,10 +25,46 @@ const BlogIndex = ({ data, location }) => {
 export default BlogIndex;
 
 export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
+  fragment SanityImage on Image {
+    crop {
+      _key
+      _type
+      top
+      bottom
+      left
+      right
+    }
+    hotspot {
+      _key
+      _type
+      x
+      y
+      height
+      width
+    }
+    asset {
+      _id
+    }
+  }
+
+  query IndexPageQuery {
+    posts: allSanityPost(
+      limit: 6
+      sort: { fields: [publishedAt], order: DESC }
+      filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
+    ) {
+      edges {
+        node {
+          id
+          publishedAt
+          mainImage {
+            ...SanityImage
+          }
+          title
+          slug {
+            current
+          }
+        }
       }
     }
   }
