@@ -36,7 +36,9 @@
     "typeface-montserrat": "0.0.75"
   },
   "devDependencies": {
-    "prettier": "^2.4.1"
+    "@types/react-helmet": "^6.1.5",
+    "prettier": "^2.4.1",
+    "typescript": "^4.5.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [

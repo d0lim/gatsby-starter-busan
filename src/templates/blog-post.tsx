@@ -6,7 +6,58 @@ import Bio from "../components/bio";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
 
-const BlogPostTemplate = ({ data, location }) => {
+type PostTemplateProps = {
+  data: {
+    post: {
+      id: string;
+      publishedAt: string;
+      categories?: {
+        _id: string;
+        title: string;
+      };
+      title: string;
+      description: string;
+      slug: {
+        current: string;
+      };
+      // TODO: define _rawBody type
+      _rawBody: any;
+      author: {
+        image?: {
+          crop?: {
+            _key: string;
+            _type: string;
+            top: number;
+            bottom: number;
+            left: number;
+            right: number;
+          };
+          hotspot?: {
+            _key: string;
+            _type: string;
+            x: number;
+            y: number;
+            height: number;
+            width: number;
+          };
+          asset: {
+            _id: string;
+          };
+        };
+        name: string;
+      };
+      mainImage?: {
+        asset: {
+          _id: string;
+          url: string;
+        };
+      };
+    };
+  };
+  location: Location;
+};
+
+const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
   const post = data.post;
   const siteTitle = data.post?.title || `Title`;
 

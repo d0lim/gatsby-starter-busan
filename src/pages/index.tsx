@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, graphql } from "gatsby";
+import { Link, graphql, PageProps } from "gatsby";
 
 import Bio from "../components/bio";
 import Layout from "../components/layout";
@@ -10,7 +10,47 @@ import {
   filterPublishedInTheFuture,
 } from "../lib/util.js";
 
-const BlogIndex = ({ data, location }) => {
+export type PostEdges = {
+  edges: PostEdge[];
+};
+
+export type PostEdge = {
+  node: PostNode;
+};
+
+export type PostNode = {
+  id: string;
+  mainImage?: {
+    crop?: {
+      _key: string;
+      _type: string;
+      top: number;
+      bottom: number;
+      left: number;
+      right: number;
+    };
+    hotspot?: {
+      _key: string;
+      _type: string;
+      x: number;
+      y: number;
+      height: number;
+      width: number;
+    };
+    asset: {
+      _id: string;
+    };
+  };
+  title: string;
+  slug: { current: string };
+  publishedAt: string;
+};
+
+type DataProps = {
+  posts: PostEdges;
+};
+
+const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
   const siteTitle = `Title`;
   const postNodes = (data || {}).posts
     ? mapEdgesToNodes(data.posts)
@@ -35,7 +75,7 @@ const BlogIndex = ({ data, location }) => {
     <Layout location={location} title={siteTitle}>
       <Seo title="All posts" />
       <Bio />
-      {postNodes.map(node => (
+      {postNodes.map((node: PostNode) => (
         <div>{node.title}</div>
       ))}
     </Layout>
