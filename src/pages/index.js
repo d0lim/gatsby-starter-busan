@@ -4,20 +4,40 @@ import { Link, graphql } from "gatsby";
 import Bio from "../components/bio";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
+import {
+  mapEdgesToNodes,
+  filterNoSlugs,
+  filterPublishedInTheFuture,
+} from "../lib/util.js";
 
 const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`;
-  const posts = [];
+  const siteTitle = `Title`;
+  const postNodes = (data || {}).posts
+    ? mapEdgesToNodes(data.posts)
+        .filter(filterNoSlugs)
+        .filter(filterPublishedInTheFuture)
+    : [];
+
+  if (!postNodes)
+    return (
+      <Layout location={location} title={siteTitle}>
+        <Seo title="All posts" />
+        <Bio />
+        <p>
+          No blog posts found. Add markdown posts to "content/blog" (or the
+          directory you specified for the "gatsby-source-filesystem" plugin in
+          gatsby-config.js).
+        </p>
+      </Layout>
+    );
 
   return (
     <Layout location={location} title={siteTitle}>
       <Seo title="All posts" />
       <Bio />
-      <p>
-        No blog posts found. Add markdown posts to "content/blog" (or the
-        directory you specified for the "gatsby-source-filesystem" plugin in
-        gatsby-config.js).
-      </p>
+      {postNodes.map(node => (
+        <div>{node.title}</div>
+      ))}
     </Layout>
   );
 };
@@ -25,7 +45,7 @@ const BlogIndex = ({ data, location }) => {
 export default BlogIndex;
 
 export const pageQuery = graphql`
-  fragment SanityImage on Image {
+  fragment SanityMainImage on SanityImage {
     crop {
       _key
       _type
@@ -58,7 +78,7 @@ export const pageQuery = graphql`
           id
           publishedAt
           mainImage {
-            ...SanityImage
+            ...SanityMainImage
           }
           title
           slug {
