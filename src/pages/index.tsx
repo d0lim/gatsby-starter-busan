@@ -8,7 +8,7 @@ import {
   mapEdgesToNodes,
   filterNoSlugs,
   filterPublishedInTheFuture,
-} from "../lib/util.js";
+} from "../lib/util";
 
 export type PostEdges = {
   edges: PostEdge[];
