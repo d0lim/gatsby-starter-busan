@@ -9,6 +9,7 @@ import {
   filterNoSlugs,
   filterPublishedInTheFuture,
 } from "../lib/util";
+import PostList from "../components/PostList";
 
 export type PostEdges = {
   edges: PostEdge[];
@@ -75,6 +76,7 @@ const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
     <Layout location={location} title={siteTitle}>
       <Seo title="All posts" />
       <Bio />
+      <PostList />
       {postNodes.map((node: PostNode) => (
         <div>{node.title}</div>
       ))}
