@@ -52,7 +52,7 @@ type DataProps = {
 };
 
 const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
-  const siteTitle = `Title`;
+  const siteTitle = `도림.로그`;
   const postNodes = (data || {}).posts
     ? mapEdgesToNodes(data.posts)
         .filter(filterNoSlugs)
