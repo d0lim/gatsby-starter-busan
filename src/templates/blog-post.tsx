@@ -2,7 +2,6 @@ import * as React from "react";
 import { Link, graphql } from "gatsby";
 import BasePortableBlock from "@sanity/block-content-to-react";
 
-import Bio from "../components/bio";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
 
@@ -79,9 +78,7 @@ const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
         /> */}
         {post._rawBody && <BasePortableBlock blocks={post._rawBody} />}
         <hr />
-        <footer>
-          <Bio />
-        </footer>
+        <footer></footer>
       </article>
     </Layout>
   );

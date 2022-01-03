@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Link, graphql, PageProps } from "gatsby";
 
-import Bio from "../components/bio";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
 import {
   mapEdgesToNodes,
   filterNoSlugs,
   filterPublishedInTheFuture,
+  getPostUrl,
 } from "../lib/util";
 import PostList from "../components/PostList";
 
@@ -63,7 +63,6 @@ const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
     return (
       <Layout location={location} title={siteTitle}>
         <Seo title="All posts" />
-        <Bio />
         <p>
           No blog posts found. Add markdown posts to "content/blog" (or the
           directory you specified for the "gatsby-source-filesystem" plugin in
@@ -75,10 +74,11 @@ const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
   return (
     <Layout location={location} title={siteTitle}>
       <Seo title="All posts" />
-      <Bio />
       <PostList />
       {postNodes.map((node: PostNode) => (
-        <div>{node.title}</div>
+        <Link to={getPostUrl(node.publishedAt, node.slug)}>
+          <div>{node.title}</div>
+        </Link>
       ))}
     </Layout>
   );
