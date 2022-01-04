@@ -43,8 +43,18 @@ export type PostNode = {
     };
   };
   title: string;
+  description: string;
   slug: { current: string };
   publishedAt: string;
+  tags?: {
+    title: string;
+  }[];
+  categories?: {
+    title: string;
+  }[];
+  series?: {
+    title: string;
+  }[];
 };
 
 type DataProps = {
@@ -74,12 +84,12 @@ const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
   return (
     <Layout location={location} title={siteTitle}>
       <Seo title="All posts" />
-      <PostList />
-      {postNodes.map((node: PostNode) => (
+      <PostList postNodes={postNodes} />
+      {/* {postNodes.map((node: PostNode) => (
         <Link to={getPostUrl(node.publishedAt, node.slug)}>
           <div>{node.title}</div>
         </Link>
-      ))}
+      ))} */}
     </Layout>
   );
 };
@@ -123,8 +133,18 @@ export const pageQuery = graphql`
             ...SanityMainImage
           }
           title
+          description
           slug {
             current
+          }
+          tags {
+            title
+          }
+          series {
+            title
+          }
+          categories {
+            title
           }
         }
       }

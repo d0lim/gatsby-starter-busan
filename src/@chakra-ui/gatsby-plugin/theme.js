@@ -7,12 +7,6 @@ const theme = {
         bg: "#f5f5f5",
       },
       // styles for the `a`
-      a: {
-        color: "teal.500",
-        _hover: {
-          textDecoration: "underline",
-        },
-      },
     },
   },
 };
