@@ -18,6 +18,7 @@ const Layout = ({ location, title, children }: LayoutProps) => {
         maxWidth="1080px"
         height="60px"
         justifyContent="space-between"
+        mb="24px"
       >
         <Heading as="h1" size="xl" lineHeight="60px">
           <Link to="/">{title}</Link>
@@ -30,10 +31,10 @@ const Layout = ({ location, title, children }: LayoutProps) => {
           <Text fontWeight="medium">Search</Text>
         </Flex>
       </Flex>
-      <Flex as="main" flexDir="column" width="100%" maxWidth="720px">
+      <Flex as="main" flexDir="column" width="100%" alignItems="center">
         {children}
       </Flex>
-      <Flex as="footer">
+      <Flex as="footer" mt="48px">
         © {new Date().getFullYear()}, Built with
         {` `}
         <Anchor ml="1" href="https://www.gatsbyjs.com">

@@ -9,7 +9,7 @@ type PostListProps = {
 
 const PostList = ({ postNodes }: PostListProps) => {
   return (
-    <Stack spacing={6}>
+    <Stack width="100%" maxWidth="720px" spacing={6}>
       {postNodes.map(postNode => {
         return (
           <PostEntry

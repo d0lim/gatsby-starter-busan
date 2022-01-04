@@ -10,6 +10,7 @@ import {
   getPostUrl,
 } from "../lib/util";
 import PostList from "../components/PostList";
+import Bio from "../components/Bio";
 
 export type PostEdges = {
   edges: PostEdge[];
@@ -84,6 +85,7 @@ const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
   return (
     <Layout location={location} title={siteTitle}>
       <Seo title="All posts" />
+      <Bio />
       <PostList postNodes={postNodes} />
       {/* {postNodes.map((node: PostNode) => (
         <Link to={getPostUrl(node.publishedAt, node.slug)}>
