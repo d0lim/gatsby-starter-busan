@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Link, graphql } from "gatsby";
-import BasePortableBlock from "@sanity/block-content-to-react";
 
 import Layout from "../components/layout";
 import Seo from "../components/seo";
@@ -19,8 +18,10 @@ type PostTemplateProps = {
       slug: {
         current: string;
       };
-      // TODO: define _rawBody type
-      _rawBody: any;
+      // TODO: define markdown type
+      content: {
+        markdown: any;
+      };
       author: {
         image?: {
           crop?: {
@@ -76,7 +77,7 @@ const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
           dangerouslySetInnerHTML={{ __html: post.html }}
           itemProp="articleBody"
         /> */}
-        {post._rawBody && <BasePortableBlock blocks={post._rawBody} />}
+        {post.content.markdown}
         <hr />
         <footer></footer>
       </article>
@@ -100,7 +101,9 @@ export const pageQuery = graphql`
       slug {
         current
       }
-      _rawBody(resolveReferences: { maxDepth: 5 })
+      content {
+        markdown
+      }
       author {
         image {
           crop {
