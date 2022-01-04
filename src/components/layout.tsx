@@ -14,7 +14,8 @@ const Layout = ({ location, title, children }: LayoutProps) => {
     <Flex flexDir="column" alignItems="center">
       <Flex
         as="header"
-        width="1080px"
+        width="100%"
+        maxWidth="1080px"
         height="60px"
         justifyContent="space-between"
       >
@@ -29,7 +30,7 @@ const Layout = ({ location, title, children }: LayoutProps) => {
           <Text fontWeight="medium">Search</Text>
         </Flex>
       </Flex>
-      <Flex as="main" flexDir="column" width="720px">
+      <Flex as="main" flexDir="column" width="100%" maxWidth="720px">
         {children}
       </Flex>
       <Flex as="footer">

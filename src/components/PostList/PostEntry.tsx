@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@chakra-ui/layout";
+import { Flex, Heading, HStack, StackDivider } from "@chakra-ui/layout";
 import { Text } from "@chakra-ui/react";
 import * as React from "react";
 
@@ -10,17 +10,24 @@ const PostEntry = () => {
       borderColor="#eeeeee"
       borderRadius="10px"
       backgroundColor="white"
+      padding="24px"
     >
-      <Heading size="lg">Post TItle</Heading>
-      <Text>Post Description lorem ipsum blabla</Text>
-      <Flex>
+      <Heading fontSize="24px">Post Title</Heading>
+      <Text mt="8px" mb="8px">
+        Post Description lorem ipsum blabla
+      </Text>
+      <HStack
+        spacing={4}
+        divider={<StackDivider></StackDivider>}
+        color="#6c6c6c"
+      >
         <Text>2022.01.01</Text>
         <Text>Category</Text>
-        <Flex>
-          <Text>Tag1</Text>
-          <Text>Tag2</Text>
-        </Flex>
-      </Flex>
+        <HStack spacing={2}>
+          <Text>#Tag1</Text>
+          <Text>#Tag2</Text>
+        </HStack>
+      </HStack>
     </Flex>
   );
 };
