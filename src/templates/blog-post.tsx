@@ -3,6 +3,9 @@ import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import Seo from "../components/seo";
+import ReactMarkdown from "react-markdown";
+import ChakraUIRenderer from "chakra-ui-markdown-renderer";
+import { Code } from "@chakra-ui/layout";
 
 type PostTemplateProps = {
   data: {
@@ -20,7 +23,7 @@ type PostTemplateProps = {
       };
       // TODO: define markdown type
       content: {
-        markdown: any;
+        markdown: string;
       };
       author: {
         image?: {
@@ -59,10 +62,9 @@ type PostTemplateProps = {
 
 const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
   const post = data.post;
-  const siteTitle = data.post?.title || `Title`;
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location}>
       <Seo title={post.title} description={post.description || ""} />
       <article
         className="blog-post"
@@ -77,7 +79,12 @@ const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
           dangerouslySetInnerHTML={{ __html: post.html }}
           itemProp="articleBody"
         /> */}
-        {post.content.markdown}
+        <ReactMarkdown
+          components={ChakraUIRenderer()}
+          children={post.content.markdown}
+          skipHtml
+        />
+
         <hr />
         <footer></footer>
       </article>

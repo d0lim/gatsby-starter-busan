@@ -5,11 +5,10 @@ import { Link as Anchor, Text } from "@chakra-ui/react";
 
 type LayoutProps = {
   location: Location;
-  title: string;
   children: React.ReactNode;
 };
 
-const Layout = ({ location, title, children }: LayoutProps) => {
+const Layout = ({ location, children }: LayoutProps) => {
   return (
     <Flex flexDir="column" alignItems="center">
       <Flex
@@ -21,7 +20,7 @@ const Layout = ({ location, title, children }: LayoutProps) => {
         mb="24px"
       >
         <Heading as="h1" size="xl" lineHeight="60px">
-          <Link to="/">{title}</Link>
+          <Link to="/">도림.로그</Link>
         </Heading>
         <Flex width="350px" justifyContent="space-between" alignItems="center">
           <Text fontWeight="medium">Categories</Text>

@@ -1,8 +1,5 @@
-import path from (`path`);
-import { isFuture, format } from ("date-fns");
-import unified  from ("unified");
-import remarkHtml from ("remark-html");
-import remarkParse from ("remark-parse");
+const path = require("path");
+const { isFuture, format } = require("date-fns");
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
@@ -55,37 +52,4 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         context: { id },
       });
     });
-};
-
-module.exports.onCreateNode = async ({
-  node,
-  actions,
-  createNodeId,
-  createContentDigest,
-}) => {
-  if (node.internal.type == "SanityPost") {
-    const newNode = {
-      id: createNodeId(`SanityPostContent-${node.id}`),
-      parent: node.id,
-      internal: {
-        content:
-          JSON.stringify(
-            unified()
-              .use(remarkParse)
-              .use(remarkHtml, { sanitize: node.content.markdown })
-              .processSync(node.content.markdown)
-          ) || " ",
-        type: "SanityPostContent",
-        mediaType: "text/markdown",
-        contentDigest: createContentDigest({
-          content: JSON.stringify(node.content.markdown),
-        }),
-      },
-    };
-    actions.createNode(newNode);
-    actions.createParentChildLink({
-      parent: node,
-      child: newNode,
-    });
-  }
 };

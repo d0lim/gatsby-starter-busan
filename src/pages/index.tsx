@@ -63,7 +63,6 @@ type DataProps = {
 };
 
 const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
-  const siteTitle = `도림.로그`;
   const postNodes = (data || {}).posts
     ? mapEdgesToNodes(data.posts)
         .filter(filterNoSlugs)
@@ -72,7 +71,7 @@ const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
 
   if (!postNodes)
     return (
-      <Layout location={location} title={siteTitle}>
+      <Layout location={location}>
         <Seo title="All posts" />
         <p>
           No blog posts found. Add markdown posts to "content/blog" (or the
@@ -83,7 +82,7 @@ const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
     );
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location}>
       <Seo title="All posts" />
       <Bio />
       <PostList postNodes={postNodes} />
