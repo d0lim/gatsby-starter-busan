@@ -1,7 +1,9 @@
 ---
 title: Hello World
-date: "2015-05-01T22:12:03.284Z"
-description: "Hello World"
+publishedAt: "2015-05-01T22:12:03.284Z"
+description: "Hello World first post"
+tag: ["tag1", "tag2"]
+category: ["낙서"]
 ---
 
 This is my first post on my new fake blog! How exciting!
@@ -158,6 +160,10 @@ This is a paragraph.
 ```markdown
 1. `code goes` here in this line
 1. **bold** goes here
+```
+
+```python
+print('Hello')
 ```
 
 Paragraph:

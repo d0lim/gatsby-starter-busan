@@ -7,15 +7,15 @@ export function mapEdgesToNodes(data: PostEdges) {
 }
 
 export function filterNoSlugs({ slug }: PostNode) {
-  return (slug || {}).current;
+  return slug || {};
 }
 
-export function filterPublishedInTheFuture({ publishedAt }: PostNode) {
+export function filterPublishedInTheFuture({
+  frontmatter: { publishedAt },
+}: PostNode) {
   return !isFuture(new Date(publishedAt));
 }
 
-export function getPostUrl(publishedAt: string, slug: { current: string }) {
-  return `/blog/${format(new Date(publishedAt), "yyyy/MM")}/${
-    slug.current || slug
-  }/`;
+export function getPostUrl(publishedAt: string, slug: string) {
+  return `/blog/${format(new Date(publishedAt), "yyyy/MM")}/${slug}`;
 }

@@ -12,7 +12,7 @@ type PostEntryProps = {
   category?: string;
   tags?: string[];
   series?: string;
-  slug: { current: string };
+  slug: string;
 };
 
 const PostEntry = ({

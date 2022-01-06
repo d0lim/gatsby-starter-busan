@@ -13,12 +13,14 @@ const PostList = ({ postNodes }: PostListProps) => {
       {postNodes.map(postNode => {
         return (
           <PostEntry
-            title={postNode.title}
-            description={postNode.description}
-            publishedAt={postNode.publishedAt}
-            category={postNode.categories && postNode.categories[0].title}
-            tags={postNode.tags && postNode.tags.map(tag => tag.title)}
-            series={postNode.series && postNode.series[0].title}
+            title={postNode.frontmatter.title}
+            description={postNode.frontmatter.description}
+            publishedAt={postNode.frontmatter.publishedAt}
+            category={
+              postNode.frontmatter.category && postNode.frontmatter.category[0]
+            }
+            tags={postNode.frontmatter.tag && postNode.frontmatter.tag}
+            series={postNode.frontmatter.series}
             slug={postNode.slug}
           />
         );

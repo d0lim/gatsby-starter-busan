@@ -3,61 +3,121 @@ import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import Seo from "../components/seo";
-import ReactMarkdown from "react-markdown";
-import ChakraUIRenderer from "chakra-ui-markdown-renderer";
-import { Code } from "@chakra-ui/layout";
+import { Box, Divider, Flex, Heading } from "@chakra-ui/layout";
+import {
+  Text,
+  Image,
+  OrderedList,
+  UnorderedList,
+  Code,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Td,
+  Th,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
+import { MDXRenderer } from "gatsby-plugin-mdx";
+import { MDXProvider } from "@mdx-js/react";
 
 type PostTemplateProps = {
   data: {
     post: {
-      id: string;
-      publishedAt: string;
-      categories?: {
-        _id: string;
+      frontmatter: {
         title: string;
+        description?: string;
+        publishedAt: string;
+        tag?: string[];
+        category?: string[];
+        series?: string;
       };
-      title: string;
-      description: string;
-      slug: {
-        current: string;
-      };
-      // TODO: define markdown type
-      content: {
-        markdown: string;
-      };
-      author: {
-        image?: {
-          crop?: {
-            _key: string;
-            _type: string;
-            top: number;
-            bottom: number;
-            left: number;
-            right: number;
-          };
-          hotspot?: {
-            _key: string;
-            _type: string;
-            x: number;
-            y: number;
-            height: number;
-            width: number;
-          };
-          asset: {
-            _id: string;
-          };
-        };
-        name: string;
-      };
-      mainImage?: {
-        asset: {
-          _id: string;
-          url: string;
-        };
-      };
+      body: string;
+      excerpt: string;
     };
   };
   location: Location;
+};
+
+const mdComponents = {
+  h1: (props: any) => (
+    <Heading {...props} as="h1" size="2xl">
+      {props.children}
+    </Heading>
+  ),
+  h2: (props: any) => (
+    <Heading {...props} as="h2" size="xl">
+      {props.children}
+    </Heading>
+  ),
+  h3: (props: any) => (
+    <Heading {...props} as="h3" size="lg">
+      {props.children}
+    </Heading>
+  ),
+  h4: (props: any) => (
+    <Heading {...props} as="h4" size="md">
+      {props.children}
+    </Heading>
+  ),
+  h5: (props: any) => (
+    <Heading {...props} as="h5" size="sm">
+      {props.children}
+    </Heading>
+  ),
+  h6: (props: any) => (
+    <Heading {...props} as="h6" size="xs">
+      {props.children}
+    </Heading>
+  ),
+  p: (props: any) => {
+    const { children } = props;
+    return <Text mb={2}>{children}</Text>;
+  },
+  hr: (props: any) => {
+    return <Divider />;
+  },
+  img: (props: any) => {
+    console.log("Image props:", props);
+    return <Image {...props}>{props.children}</Image>;
+  },
+  ul: (props: any) => {
+    const { ordered, children, depth } = props;
+    let Element = UnorderedList;
+    return (
+      <Element spacing={2} as={"ul"} pl={4} {...props}>
+        {children}
+      </Element>
+    );
+  },
+  ol: (props: any) => {
+    const { children, depth } = props;
+    let Element = OrderedList;
+    return (
+      <Element spacing={2} as={"ol"} pl={4} {...props}>
+        {children}
+      </Element>
+    );
+  },
+  blockquote: (props: any) => {
+    const { children } = props;
+    return (
+      <Code as="blockquote" p={2}>
+        {children}
+      </Code>
+    );
+  },
+  table: (props: any) => <Table colorScheme="facebook">{props.children}</Table>,
+  thead: Thead,
+  tbody: Tbody,
+  tr: (props: any) => <Tr>{props.children}</Tr>,
+  td: (props: any) => <Td>{props.children}</Td>,
+  th: (props: any) => <Th>{props.children}</Th>,
+  a: (props: any) => (
+    <ChakraLink as="a" {...props} color="teal.500">
+      {props.children}
+    </ChakraLink>
+  ),
 };
 
 const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
@@ -65,25 +125,24 @@ const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
 
   return (
     <Layout location={location}>
-      <Seo title={post.title} description={post.description || ""} />
+      <Seo
+        title={post.frontmatter.title}
+        description={post.frontmatter.description || post.excerpt}
+      />
       <article
         className="blog-post"
         itemScope
         itemType="http://schema.org/Article"
       >
-        <header>
-          <h1 itemProp="headline">{post.title}</h1>
-          <p>{post.publishedAt}</p>
-        </header>
-        {/* <section
-          dangerouslySetInnerHTML={{ __html: post.html }}
-          itemProp="articleBody"
-        /> */}
-        <ReactMarkdown
-          components={ChakraUIRenderer()}
-          children={post.content.markdown}
-          skipHtml
-        />
+        <Flex as="header" flexDir="column" mb="48px">
+          <Heading size="3xl">{post.frontmatter.title}</Heading>
+          <Text>{post.frontmatter.publishedAt}</Text>
+        </Flex>
+        <Box maxW="720px">
+          <MDXProvider components={mdComponents}>
+            <MDXRenderer>{post.body}</MDXRenderer>
+          </MDXProvider>
+        </Box>
 
         <hr />
         <footer></footer>
@@ -96,51 +155,16 @@ export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostTemplateQuery($id: String!) {
-    post: sanityPost(id: { eq: $id }) {
-      id
-      publishedAt
-      categories {
-        _id
+    post: mdx(id: { eq: $id }) {
+      frontmatter {
         title
+        description
+        publishedAt
+        tag
+        category
+        series
       }
-      title
-      description
-      slug {
-        current
-      }
-      content {
-        markdown
-      }
-      author {
-        image {
-          crop {
-            _key
-            _type
-            top
-            bottom
-            left
-            right
-          }
-          hotspot {
-            _key
-            _type
-            x
-            y
-            height
-            width
-          }
-          asset {
-            _id
-          }
-        }
-        name
-      }
-      mainImage {
-        asset {
-          _id
-          url
-        }
-      }
+      body
     }
   }
 `;

@@ -22,40 +22,15 @@ export type PostEdge = {
 
 export type PostNode = {
   id: string;
-  mainImage?: {
-    crop?: {
-      _key: string;
-      _type: string;
-      top: number;
-      bottom: number;
-      left: number;
-      right: number;
-    };
-    hotspot?: {
-      _key: string;
-      _type: string;
-      x: number;
-      y: number;
-      height: number;
-      width: number;
-    };
-    asset: {
-      _id: string;
-    };
+  slug: string;
+  frontmatter: {
+    title: string;
+    description: string;
+    publishedAt: string;
+    tag: string[];
+    category: string[];
+    series?: string;
   };
-  title: string;
-  description: string;
-  slug: { current: string };
-  publishedAt: string;
-  tags?: {
-    title: string;
-  }[];
-  categories?: {
-    title: string;
-  }[];
-  series?: {
-    title: string;
-  }[];
 };
 
 type DataProps = {
@@ -86,11 +61,6 @@ const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
       <Seo title="All posts" />
       <Bio />
       <PostList postNodes={postNodes} />
-      {/* {postNodes.map((node: PostNode) => (
-        <Link to={getPostUrl(node.publishedAt, node.slug)}>
-          <div>{node.title}</div>
-        </Link>
-      ))} */}
     </Layout>
   );
 };
@@ -98,54 +68,21 @@ const BlogIndex: React.FC<PageProps<DataProps>> = ({ data, location }) => {
 export default BlogIndex;
 
 export const pageQuery = graphql`
-  fragment SanityMainImage on SanityImage {
-    crop {
-      _key
-      _type
-      top
-      bottom
-      left
-      right
-    }
-    hotspot {
-      _key
-      _type
-      x
-      y
-      height
-      width
-    }
-    asset {
-      _id
-    }
-  }
-
   query IndexPageQuery {
-    posts: allSanityPost(
-      limit: 6
-      sort: { fields: [publishedAt], order: DESC }
-      filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
+    posts: allMdx(
+      filter: { slug: { ne: null }, frontmatter: { publishedAt: { ne: null } } }
     ) {
       edges {
         node {
           id
-          publishedAt
-          mainImage {
-            ...SanityMainImage
-          }
-          title
-          description
-          slug {
-            current
-          }
-          tags {
+          slug
+          frontmatter {
             title
-          }
-          series {
-            title
-          }
-          categories {
-            title
+            description
+            publishedAt
+            tag
+            category
+            series
           }
         }
       }

@@ -1,6 +1,23 @@
 const path = require("path");
 const { isFuture, format } = require("date-fns");
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+
+  const typeDefs = `
+    type MdxFrontmatter {
+      title: String!
+      description: String
+      tag: [String]
+      category: [String]
+      series: String
+      publishedAt: Date! @dateformat
+      mainImage: File @fileByRelativePath
+    }
+  `;
+  createTypes(typeDefs);
+};
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
@@ -10,16 +27,19 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Get all markdown blog posts sorted by date
   const result = await graphql(`
     {
-      allSanityPost(
-        filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
-        sort: { fields: publishedAt }
+      allMdx(
+        filter: {
+          slug: { ne: null }
+          frontmatter: { publishedAt: { ne: null } }
+        }
+        sort: { fields: frontmatter___publishedAt, order: DESC }
       ) {
         edges {
           node {
             id
-            publishedAt
-            slug {
-              current
+            slug
+            frontmatter {
+              publishedAt
             }
           }
         }
@@ -35,16 +55,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return;
   }
 
-  const postEdges = (result.data.allSanityPost || {}).edges || [];
+  const postEdges = (result.data.allMdx || {}).edges || [];
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
   postEdges
-    .filter(edge => !isFuture(new Date(edge.node.publishedAt)))
+    .filter(edge => !isFuture(new Date(edge.node.frontmatter.publishedAt)))
     .forEach(edge => {
-      const { id, slug = {}, publishedAt } = edge.node;
+      const {
+        id,
+        slug = "",
+        frontmatter: { publishedAt },
+      } = edge.node;
       const dateSegment = format(new Date(publishedAt), "yyyy/MM");
-      const path = `/blog/${dateSegment}/${slug.current}/`;
+      const path = `/blog/${dateSegment}/${slug}`;
 
       createPage({
         path,
