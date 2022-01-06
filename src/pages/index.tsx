@@ -71,6 +71,7 @@ export const pageQuery = graphql`
   query IndexPageQuery {
     posts: allMdx(
       filter: { slug: { ne: null }, frontmatter: { publishedAt: { ne: null } } }
+      sort: { fields: frontmatter___publishedAt, order: DESC }
     ) {
       edges {
         node {

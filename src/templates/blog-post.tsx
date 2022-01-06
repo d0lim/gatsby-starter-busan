@@ -78,7 +78,6 @@ const mdComponents = {
     return <Divider />;
   },
   img: (props: any) => {
-    console.log("Image props:", props);
     return <Image {...props}>{props.children}</Image>;
   },
   ul: (props: any) => {
