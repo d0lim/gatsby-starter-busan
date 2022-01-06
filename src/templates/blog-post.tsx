@@ -128,24 +128,19 @@ const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
-      <article
-        className="blog-post"
-        itemScope
-        itemType="http://schema.org/Article"
-      >
+      <Flex as="article" className="blog-post" flexDir="column" maxWidth="100%">
         <Flex as="header" flexDir="column" mb="48px">
           <Heading size="3xl">{post.frontmatter.title}</Heading>
           <Text>{post.frontmatter.publishedAt}</Text>
         </Flex>
-        <Box maxW="720px" width="100%">
+        <Box maxW="720px">
           <MDXProvider components={mdComponents}>
             <MDXRenderer>{post.body}</MDXRenderer>
           </MDXProvider>
         </Box>
 
-        <hr />
-        <footer></footer>
-      </article>
+        <Divider />
+      </Flex>
     </Layout>
   );
 };
