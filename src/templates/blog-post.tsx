@@ -138,7 +138,7 @@ const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
           <Heading size="3xl">{post.frontmatter.title}</Heading>
           <Text>{post.frontmatter.publishedAt}</Text>
         </Flex>
-        <Box maxW="720px">
+        <Box maxW="720px" width="100%">
           <MDXProvider components={mdComponents}>
             <MDXRenderer>{post.body}</MDXRenderer>
           </MDXProvider>
