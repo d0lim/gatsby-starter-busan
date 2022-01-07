@@ -86,11 +86,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const postEdges = (allPostResult.data.allMdx || {}).edges || [];
 
   /**
-   * Make set for organizing all tags
-   */
-  let tagArray = [];
-
-  /**
    * Process post edges to make post pages and organize tags
    */
   postEdges
@@ -110,22 +105,24 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         component: blogPost,
         context: { id },
       });
-
-      /**
-       * tags will be array
-       * and we need to make our own 'Set-like' array
-       */
-      tagArray = [...tagArray, ...tags];
     });
 
   /**
-   * Remove duplicates in tagArray with using tagSlug as key
+   * Make set for organizing all tags
+   * without duplicates
    */
-  const tagSet = tagArray.filter(
-    (value, index, self) =>
-      index ===
-      self.findIndex(e => e.name === value.name && e.tagSlug === value.tagSlug)
-  );
+
+  const tagSet = postEdges
+    .filter(edge => !isFuture(new Date(edge.node.frontmatter.publishedAt)))
+    .map(edge => edge.node.fields.tags)
+    .reduce((prev, curr) => [...prev, ...curr])
+    .filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex(
+          e => e.name === value.name && e.tagSlug === value.tagSlug
+        )
+    );
 
   /**
    * Create tag pages

@@ -4,6 +4,7 @@ import { Text } from "@chakra-ui/react";
 import Layout from "../../components/BlogLayout";
 import { graphql, Link } from "gatsby";
 import { isFuture } from "date-fns";
+import Seo from "../../components/seo";
 
 type TagsPageProps = {
   data: {
@@ -47,6 +48,7 @@ const TagsPage = ({ data, location }: TagsPageProps) => {
 
   return (
     <Layout location={location}>
+      <Seo title="Tags" />
       <Heading size="xl" mt="24px" mb="48px">
         Tags Page
       </Heading>
