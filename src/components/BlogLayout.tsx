@@ -23,11 +23,21 @@ const Layout = ({ location, children }: LayoutProps) => {
           <Link to="/">도림.로그</Link>
         </Heading>
         <Flex width="350px" justifyContent="space-between" alignItems="center">
-          <Text fontWeight="medium">Categories</Text>
-          <Text fontWeight="medium">Tags</Text>
-          <Text fontWeight="medium">Series</Text>
-          <Text fontWeight="medium">Archive</Text>
-          <Text fontWeight="medium">Search</Text>
+          <Link to="/blog/categories">
+            <Text fontWeight="medium">Categories</Text>
+          </Link>
+          <Link to="/blog/tags">
+            <Text fontWeight="medium">Tags</Text>
+          </Link>
+          <Link to="/blog/series">
+            <Text fontWeight="medium">Series</Text>
+          </Link>
+          <Link to="/blog/archive">
+            <Text fontWeight="medium">Archive</Text>
+          </Link>
+          <Link to="#">
+            <Text fontWeight="medium">Search</Text>
+          </Link>
         </Flex>
       </Flex>
       <Flex as="main" flexDir="column" width="100%" alignItems="center">
