@@ -19,3 +19,7 @@ export function filterPublishedInTheFuture({
 export function getPostUrl(publishedAt: string, slug: string) {
   return `/blog/${format(new Date(publishedAt), "yyyy/MM")}/${slug}`;
 }
+
+export function getTagUrl(slug: string) {
+  return `/blog/tags/${slug}`;
+}

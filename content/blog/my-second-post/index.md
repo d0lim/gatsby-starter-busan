@@ -1,7 +1,7 @@
 ---
 title: My Second Post!
 publishedAt: "2015-05-06T23:46:37.121Z"
-tag: ["tag2", "tag3"]
+tags: ["tag2", "tag3"]
 category: ["낙서"]
 ---
 

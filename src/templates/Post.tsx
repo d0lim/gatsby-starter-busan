@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link, graphql } from "gatsby";
 
-import Layout from "../components/layout";
+import Layout from "../components/BlogLayout";
 import Seo from "../components/seo";
 import { Box, Divider, Flex, Heading } from "@chakra-ui/layout";
 import {
@@ -119,7 +119,7 @@ const mdComponents = {
   ),
 };
 
-const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
+const PostTemplate = ({ data, location }: PostTemplateProps) => {
   const post = data.post;
 
   return (
@@ -145,16 +145,16 @@ const BlogPostTemplate = ({ data, location }: PostTemplateProps) => {
   );
 };
 
-export default BlogPostTemplate;
+export default PostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostTemplateQuery($id: String!) {
+  query PostTemplateQuery($id: String!) {
     post: mdx(id: { eq: $id }) {
       frontmatter {
         title
         description
         publishedAt
-        tag
+        tags
         category
         series
       }

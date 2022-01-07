@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link, graphql, PageProps } from "gatsby";
 
-import Layout from "../components/layout";
+import Layout from "../components/BlogLayout";
 import Seo from "../components/seo";
 import {
   mapEdgesToNodes,
@@ -20,6 +20,11 @@ export type PostEdge = {
   node: PostNode;
 };
 
+export type TagField = {
+  name: string;
+  tagSlug: string;
+};
+
 export type PostNode = {
   id: string;
   slug: string;
@@ -27,9 +32,12 @@ export type PostNode = {
     title: string;
     description: string;
     publishedAt: string;
-    tag: string[];
+    tags: string[];
     category: string[];
     series?: string;
+  };
+  fields: {
+    tags: TagField[];
   };
 };
 
@@ -81,9 +89,15 @@ export const pageQuery = graphql`
             title
             description
             publishedAt
-            tag
+            tags
             category
             series
+          }
+          fields {
+            tags {
+              name
+              tagSlug
+            }
           }
         }
       }

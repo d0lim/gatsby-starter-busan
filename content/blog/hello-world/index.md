@@ -2,7 +2,7 @@
 title: Hello World
 publishedAt: "2015-05-01T22:12:03.284Z"
 description: "Hello World first post"
-tag: ["tag1", "tag2"]
+tags: ["tag1", "tag2"]
 category: ["낙서"]
 ---
 

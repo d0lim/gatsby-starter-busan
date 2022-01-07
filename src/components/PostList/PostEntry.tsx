@@ -1,16 +1,17 @@
 import { Flex, Heading, HStack, StackDivider } from "@chakra-ui/layout";
 import { Text } from "@chakra-ui/react";
 import * as React from "react";
-import { getPostUrl } from "../../lib/util";
+import { getPostUrl, getTagUrl } from "../../lib/util";
 import { Link } from "gatsby";
 import { format } from "date-fns";
+import { TagField } from "../../pages";
 
 type PostEntryProps = {
   title: string;
   description: string;
   publishedAt: string;
   category?: string;
-  tags?: string[];
+  tags?: TagField[];
   series?: string;
   slug: string;
 };
@@ -48,7 +49,9 @@ const PostEntry = ({
           {tags && (
             <HStack spacing={2}>
               {tags.map(tag => (
-                <Text>#{tag}</Text>
+                <Link to={getTagUrl(tag.tagSlug)}>
+                  <Text>#{tag.name}</Text>
+                </Link>
               ))}
             </HStack>
           )}

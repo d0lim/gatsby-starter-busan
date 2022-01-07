@@ -19,7 +19,7 @@ const PostList = ({ postNodes }: PostListProps) => {
             category={
               postNode.frontmatter.category && postNode.frontmatter.category[0]
             }
-            tags={postNode.frontmatter.tag && postNode.frontmatter.tag}
+            tags={postNode.fields.tags}
             series={postNode.frontmatter.series}
             slug={postNode.slug}
           />

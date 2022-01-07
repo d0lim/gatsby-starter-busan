@@ -2,7 +2,7 @@
 title: New Beginnings
 publishedAt: "2015-05-28T22:40:32.169Z"
 description: This is a custom description for SEO and Open Graph purposes, rather than the default generated excerpt. Simply add a description field to the frontmatter.
-tag: ["tag1", "tag3"]
+tags: ["tag1", "tag3"]
 category: ["낙서"]
 ---
 
