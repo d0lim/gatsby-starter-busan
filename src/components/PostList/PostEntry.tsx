@@ -1,17 +1,17 @@
 import { Flex, Heading, HStack, StackDivider } from "@chakra-ui/layout";
 import { Text } from "@chakra-ui/react";
 import * as React from "react";
-import { getPostUrl, getTagUrl } from "../../lib/util";
+import { getPostUrl, getSeriesUrl, getTagUrl } from "../../lib/util";
 import { Link } from "gatsby";
 import { format } from "date-fns";
-import { TagField } from "../../pages";
+import { SeriesField, TagField } from "../../pages";
 
 type PostEntryProps = {
   title: string;
   description: string;
   publishedAt: string;
   tags?: TagField[];
-  series?: string;
+  series?: SeriesField;
   slug: string;
 };
 
@@ -52,7 +52,11 @@ const PostEntry = ({
               ))}
             </HStack>
           )}
-          {series && <Text>Series - 「 {series} 」</Text>}
+          {series && (
+            <Link to={getSeriesUrl(series.seriesSlug)}>
+              <Text>Series - 「 {series.name} 」</Text>
+            </Link>
+          )}
         </HStack>
       </Flex>
     </Link>

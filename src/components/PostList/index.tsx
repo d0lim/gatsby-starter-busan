@@ -17,7 +17,7 @@ const PostList = ({ postNodes }: PostListProps) => {
             description={postNode.frontmatter.description}
             publishedAt={postNode.frontmatter.publishedAt}
             tags={postNode.fields.tags}
-            series={postNode.frontmatter.series}
+            series={postNode.fields.series}
             slug={postNode.slug}
           />
         );

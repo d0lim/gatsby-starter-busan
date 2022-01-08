@@ -23,3 +23,7 @@ export function getPostUrl(publishedAt: string, slug: string) {
 export function getTagUrl(slug: string) {
   return `/blog/tags/${slug}`;
 }
+
+export function getSeriesUrl(slug: string) {
+  return `/blog/series/${slug}`;
+}

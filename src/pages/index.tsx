@@ -102,6 +102,10 @@ export const pageQuery = graphql`
               name
               tagSlug
             }
+            series {
+              name
+              seriesSlug
+            }
           }
         }
       }
