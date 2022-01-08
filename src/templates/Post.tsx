@@ -29,7 +29,6 @@ type PostTemplateProps = {
         description?: string;
         publishedAt: string;
         tag?: string[];
-        category?: string[];
         series?: string;
       };
       body: string;
@@ -155,7 +154,6 @@ export const pageQuery = graphql`
         description
         publishedAt
         tags
-        category
         series
       }
       body

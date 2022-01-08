@@ -23,9 +23,6 @@ const Layout = ({ location, children }: LayoutProps) => {
           <Link to="/">도림.로그</Link>
         </Heading>
         <Flex width="350px" justifyContent="space-between" alignItems="center">
-          <Link to="/blog/categories">
-            <Text fontWeight="medium">Categories</Text>
-          </Link>
           <Link to="/blog/tags">
             <Text fontWeight="medium">Tags</Text>
           </Link>

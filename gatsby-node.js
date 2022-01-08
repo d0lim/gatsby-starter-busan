@@ -30,7 +30,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String!
       description: String
       tags: [String]
-      category: [String]
       series: String
       publishedAt: Date! @dateformat
       mainImage: File @fileByRelativePath

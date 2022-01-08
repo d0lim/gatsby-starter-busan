@@ -2,7 +2,6 @@
 title: My Second Post!
 publishedAt: "2015-05-06T23:46:37.121Z"
 tags: ["tag2", "tag3"]
-category: ["낙서"]
 ---
 
 Wow! I love blogging so much already.

@@ -3,7 +3,6 @@ title: Hello World
 publishedAt: "2015-05-01T22:12:03.284Z"
 description: "Hello World first post"
 tags: ["tag1", "tag2"]
-category: ["낙서"]
 ---
 
 This is my first post on my new fake blog! How exciting!

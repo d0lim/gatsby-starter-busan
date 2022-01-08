@@ -10,7 +10,6 @@ type PostEntryProps = {
   title: string;
   description: string;
   publishedAt: string;
-  category?: string;
   tags?: TagField[];
   series?: string;
   slug: string;
@@ -20,7 +19,6 @@ const PostEntry = ({
   title,
   description,
   publishedAt,
-  category,
   tags,
   series,
   slug,
@@ -45,7 +43,6 @@ const PostEntry = ({
           color="#6c6c6c"
         >
           <Text>{format(new Date(publishedAt), "yyyy. MM. dd.")}</Text>
-          {category && <Text>{category}</Text>}
           {tags && (
             <HStack spacing={2}>
               {tags.map(tag => (

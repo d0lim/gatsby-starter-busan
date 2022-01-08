@@ -58,7 +58,6 @@ export const pageQuery = graphql`
             description
             publishedAt
             tags
-            category
             series
           }
           fields {

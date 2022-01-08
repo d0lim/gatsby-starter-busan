@@ -33,7 +33,6 @@ export type PostNode = {
     description: string;
     publishedAt: string;
     tags: string[];
-    category: string[];
     series?: string;
   };
   fields: {
@@ -90,7 +89,6 @@ export const pageQuery = graphql`
             description
             publishedAt
             tags
-            category
             series
           }
           fields {

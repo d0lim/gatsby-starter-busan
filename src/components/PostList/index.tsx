@@ -16,9 +16,6 @@ const PostList = ({ postNodes }: PostListProps) => {
             title={postNode.frontmatter.title}
             description={postNode.frontmatter.description}
             publishedAt={postNode.frontmatter.publishedAt}
-            category={
-              postNode.frontmatter.category && postNode.frontmatter.category[0]
-            }
             tags={postNode.fields.tags}
             series={postNode.frontmatter.series}
             slug={postNode.slug}
