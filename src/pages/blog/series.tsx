@@ -53,7 +53,7 @@ const SeriesPage = ({ data, location }: SeriesPageProps) => {
       <HStack spacing={4}>
         {series.map(s => (
           <Link to={s.seriesSlug}>
-            <Text>#{s.name}</Text>
+            <Text>「 {s.name} 」</Text>
           </Link>
         ))}
       </HStack>
