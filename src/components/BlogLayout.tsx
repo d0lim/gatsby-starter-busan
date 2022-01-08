@@ -22,7 +22,7 @@ const Layout = ({ location, children }: LayoutProps) => {
         <Heading as="h1" size="xl" lineHeight="60px">
           <Link to="/">도림.로그</Link>
         </Heading>
-        <Flex width="350px" justifyContent="space-between" alignItems="center">
+        <Flex width="280px" justifyContent="space-between" alignItems="center">
           <Link to="/blog/tags">
             <Text fontWeight="medium">Tags</Text>
           </Link>
