@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 import { graphql } from "gatsby";
 import * as React from "react";
 import Layout from "../components/BlogLayout";
@@ -11,22 +11,22 @@ import {
 } from "../lib/util";
 import { PostEdges } from "../pages";
 
-type TagTemplateProps = {
+type SeriesTemplateProps = {
   data: {
     posts: PostEdges;
   };
   location: Location;
   pageContext: {
     name: string;
-    tagSlug: string;
+    seriesSlug: string;
   };
 };
 
-const TagTemplate = ({
+const SeriesTemplate = ({
   data,
   location,
-  pageContext: { name, tagSlug },
-}: TagTemplateProps) => {
+  pageContext: { name, seriesSlug },
+}: SeriesTemplateProps) => {
   const postNodes = (data || {}).posts
     ? mapEdgesToNodes(data.posts)
         .filter(filterNoSlugs)
@@ -34,9 +34,9 @@ const TagTemplate = ({
     : [];
   return (
     <Layout location={location}>
-      <Seo title={`Tag | #${name}`} />
+      <Seo title={`Series - ${name}`} />
       <Heading size="xl" mt="24px" mb="48px">
-        Posts with #{name}
+        Series - {name}
       </Heading>
       <PostList postNodes={postNodes} />
     </Layout>
@@ -44,10 +44,10 @@ const TagTemplate = ({
 };
 
 export const pageQuery = graphql`
-  query TagTemplateQuery($tagSlug: String!) {
+  query SeriesTemplateQuery($seriesSlug: String!) {
     posts: allMdx(
       sort: { fields: frontmatter___publishedAt, order: DESC }
-      filter: { fields: { tags: { elemMatch: { tagSlug: { eq: $tagSlug } } } } }
+      filter: { fields: { series: { seriesSlug: { eq: $seriesSlug } } } }
     ) {
       edges {
         node {
@@ -76,4 +76,4 @@ export const pageQuery = graphql`
   }
 `;
 
-export default TagTemplate;
+export default SeriesTemplate;

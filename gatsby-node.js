@@ -1,12 +1,12 @@
 const path = require("path");
 const { isFuture, format } = require("date-fns");
-var slugify = require("slugify");
+const slugify = require("slugify");
 
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions;
   if (node.internal.type == "Mdx") {
     const {
-      frontmatter: { tags },
+      frontmatter: { tags, series },
     } = node;
 
     createNodeField({
@@ -15,9 +15,17 @@ exports.onCreateNode = ({ node, actions }) => {
       value: tags.map(tag => {
         return {
           name: tag,
-          tagSlug: slugify(tag, { remove: /[*+~.()'"!:@]/g }),
+          tagSlug: slugify(tag, { remove: /[*+~.()'"!:@]/g, lower: true }),
         };
       }),
+    });
+    createNodeField({
+      node,
+      name: "series",
+      value: {
+        name: series,
+        seriesSlug: slugify(series, { remove: /[*+~.()'"!:@]/g, lower: true }),
+      },
     });
   }
 };
@@ -44,6 +52,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Define template paths
   const blogPost = path.resolve(`./src/templates/Post.tsx`);
   const tagTemplate = path.resolve("./src/templates/Tag.tsx");
+  const seriesTemplate = path.resolve("./src/templates/Series.tsx");
 
   // Get all markdown blog posts sorted by date
   const allPostResult = await graphql(`
@@ -66,6 +75,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
               tags {
                 name
                 tagSlug
+              }
+              series {
+                name
+                seriesSlug
               }
             }
           }
@@ -94,7 +107,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         id,
         slug = "",
         frontmatter: { publishedAt },
-        fields: { tags },
       } = edge.node;
       const dateSegment = format(new Date(publishedAt), "yyyy/MM");
       const path = `/blog/${dateSegment}/${slug}`;
@@ -132,6 +144,30 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path,
       component: tagTemplate,
       context: { tagSlug: tag.tagSlug, name: tag.name },
+    });
+  });
+
+  /**
+   * Process post edges to organize post series
+   */
+
+  const seriesSet = postEdges
+    .filter(edge => !isFuture(new Date(edge.node.frontmatter.publishedAt)))
+    .map(edge => edge.node.fields.series)
+    .filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex(
+          e => e.name === value.name && e.seriesSlug === value.seriesSlug
+        )
+    );
+
+  seriesSet.forEach(series => {
+    const path = `/blog/series/${series.seriesSlug}`;
+    createPage({
+      path,
+      component: seriesTemplate,
+      context: { name: series.name, seriesSlug: series.seriesSlug },
     });
   });
 };

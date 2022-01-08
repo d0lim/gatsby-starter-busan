@@ -25,6 +25,11 @@ export type TagField = {
   tagSlug: string;
 };
 
+export type SeriesField = {
+  name: string;
+  seriesSlug: string;
+};
+
 export type PostNode = {
   id: string;
   slug: string;
@@ -37,6 +42,7 @@ export type PostNode = {
   };
   fields: {
     tags: TagField[];
+    series: SeriesField;
   };
 };
 

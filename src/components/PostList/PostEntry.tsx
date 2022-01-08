@@ -52,6 +52,7 @@ const PostEntry = ({
               ))}
             </HStack>
           )}
+          {series && <Text>Series - 「 {series} 」</Text>}
         </HStack>
       </Flex>
     </Link>

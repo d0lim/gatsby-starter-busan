@@ -48,7 +48,7 @@ const TagsPage = ({ data, location }: TagsPageProps) => {
 
   return (
     <Layout location={location}>
-      <Seo title="Tags" />
+      <Seo title="All Tags" />
       <Heading size="xl" mt="24px" mb="48px">
         Tags Page
       </Heading>
@@ -62,8 +62,6 @@ const TagsPage = ({ data, location }: TagsPageProps) => {
     </Layout>
   );
 };
-
-export default TagsPage;
 
 export const pageQuery = graphql`
   query TagsPageQuery {
@@ -87,3 +85,5 @@ export const pageQuery = graphql`
     }
   }
 `;
+
+export default TagsPage;
