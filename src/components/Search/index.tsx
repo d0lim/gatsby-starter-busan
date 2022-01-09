@@ -33,6 +33,7 @@ const Search = ({ indices }: SearchProps) => {
         searchClient={searchClient}
         indexName={indices[0].name}
         onSearchStateChange={({ query }: { query: string }) => {
+          console.log(query);
           setQuery(query);
           if (query.length > 0) setShow(true);
           else setShow(false);

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connectSearchBox } from "react-instantsearch-dom";
 import { FormControl, Input } from "@chakra-ui/react";
+import useDebounce from "../../hooks/useDebounce";
 
 type SearchBoxProps = {
   refine: (...args: any[]) => any;
@@ -8,6 +9,15 @@ type SearchBoxProps = {
 };
 
 const SearchBox = ({ refine, currentRefinement }: SearchBoxProps) => {
+  const [term, setTerm] = React.useState<string>("");
+  const debouncedValue = useDebounce<string>(term, 400);
+  React.useEffect(
+    () => {
+      refine(debouncedValue);
+    },
+    [debouncedValue] // Only call effect if debounced search term changes
+  );
+
   return (
     <FormControl>
       <Input
@@ -15,8 +25,8 @@ const SearchBox = ({ refine, currentRefinement }: SearchBoxProps) => {
         type="text"
         placeholder="Search"
         aria-label="Search"
-        onChange={e => refine(e.target.value)}
-        value={currentRefinement}
+        onChange={e => setTerm(e.target.value)}
+        value={term}
         variant="flushed"
         size="lg"
       />
