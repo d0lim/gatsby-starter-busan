@@ -7,10 +7,10 @@ import {
   mapEdgesToNodes,
   filterNoSlugs,
   filterPublishedInTheFuture,
-  getPostUrl,
 } from "../lib/util";
 import PostList from "../components/PostList";
 import Bio from "../components/Bio";
+import Search from "../components/Search";
 
 export type PostEdges = {
   edges: PostEdge[];

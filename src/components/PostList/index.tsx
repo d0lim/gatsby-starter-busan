@@ -10,7 +10,7 @@ type PostListProps = {
 const PostList = ({ postNodes }: PostListProps) => {
   return (
     <Stack width="100%" maxWidth="720px" spacing={6}>
-      {postNodes.map(postNode => {
+      {postNodes.map((postNode, index) => {
         return (
           <PostEntry
             title={postNode.frontmatter.title}
@@ -19,6 +19,7 @@ const PostList = ({ postNodes }: PostListProps) => {
             tags={postNode.fields.tags}
             series={postNode.fields.series}
             slug={postNode.slug}
+            key={index}
           />
         );
       })}

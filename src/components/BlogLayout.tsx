@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Link } from "gatsby";
 import { Flex, Heading } from "@chakra-ui/layout";
-import { Link as Anchor, Text } from "@chakra-ui/react";
+import { Button, Link as Anchor, Text } from "@chakra-ui/react";
+import SearchButton from "./SearchButton";
 
 type LayoutProps = {
   location: Location;
@@ -23,18 +24,16 @@ const Layout = ({ location, children }: LayoutProps) => {
           <Link to="/">도림.로그</Link>
         </Heading>
         <Flex width="280px" justifyContent="space-between" alignItems="center">
-          <Link to="/blog/tags">
+          <Button as={Link} to="/blog/tags" background="#f5f5f5">
             <Text fontWeight="medium">Tags</Text>
-          </Link>
-          <Link to="/blog/series">
+          </Button>
+          <Button as={Link} to="/blog/series" background="#f5f5f5">
             <Text fontWeight="medium">Series</Text>
-          </Link>
-          <Link to="/blog/archive">
+          </Button>
+          <Button as={Link} to="/blog/archive" background="#f5f5f5">
             <Text fontWeight="medium">Archive</Text>
-          </Link>
-          <Link to="#">
-            <Text fontWeight="medium">Search</Text>
-          </Link>
+          </Button>
+          <SearchButton />
         </Flex>
       </Flex>
       <Flex as="main" flexDir="column" width="100%" alignItems="center">
