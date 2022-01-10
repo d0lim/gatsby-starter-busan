@@ -4,10 +4,7 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalCloseButton,
   ModalBody,
-  ModalFooter,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import * as React from "react";
@@ -25,7 +22,6 @@ const SearchButton = () => {
       <Modal isOpen={isOpen} onClose={onClose} size="2xl">
         <ModalOverlay />
         <ModalContent>
-          {/* <ModalHeader>Search</ModalHeader> */}
           <ModalBody>
             <Search indices={[{ name: "Pages", title: "Pages" }]} />
           </ModalBody>

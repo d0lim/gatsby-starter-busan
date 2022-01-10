@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Flex } from "@chakra-ui/layout";
+import Layout from "../../components/BlogLayout";
 
-const ArchivePage = () => {
-  return <Flex>Archive Page</Flex>;
+const ArchivePage = ({ location }: { location: Location }) => {
+  return <Layout location={location}>Archive Page not implemented yet</Layout>;
 };
 
 export default ArchivePage;
