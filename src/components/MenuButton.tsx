@@ -5,7 +5,7 @@ import * as React from "react";
 
 const HamburgerMenuButton = () => {
   return (
-    <Menu isLazy direction="rtl">
+    <Menu isLazy direction="rtl" autoSelect={false}>
       <MenuButton
         as={Button}
         background="#f5f5f5"

@@ -1,7 +1,7 @@
 ---
 title: My Second Post!
 publishedAt: "2015-05-06T23:46:37.121Z"
-tags: ["tag2", "tag3"]
+tags: ["tag2", "tag3", "tag4", "tag5", "tag6"]
 series: "First Series"
 ---
 

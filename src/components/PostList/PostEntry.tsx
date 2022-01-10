@@ -47,9 +47,11 @@ const PostEntry = ({
         divider={<StackDivider></StackDivider>}
         color="#6c6c6c"
       >
-        <Text>{format(new Date(publishedAt), "yyyy. MM. dd.")}</Text>
+        <Text minW="95px">
+          {format(new Date(publishedAt), "yyyy. MM. dd.")}
+        </Text>
         {tags && (
-          <HStack spacing={2}>
+          <HStack spacing={2} overflow="auto">
             {tags.map((tag, index) => (
               <React.Fragment key={index}>
                 <Link to={getTagUrl(tag.tagSlug)}>
@@ -63,7 +65,12 @@ const PostEntry = ({
           <Link to={getSeriesUrl(series.seriesSlug)}>
             <Flex alignItems="center">
               <Icon as={Book} />
-              <Text ml={2}>「 {series.name} 」</Text>
+              <Text
+                ml={2}
+                display={{ base: "none", sm: "none", md: "inline-flex" }}
+              >
+                「 {series.name} 」
+              </Text>
             </Flex>
           </Link>
         )}
