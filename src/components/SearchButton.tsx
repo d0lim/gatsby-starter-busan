@@ -22,7 +22,7 @@ const SearchButton = () => {
         <SearchIcon />
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+      <Modal isOpen={isOpen} onClose={onClose} size="2xl">
         <ModalOverlay />
         <ModalContent>
           {/* <ModalHeader>Search</ModalHeader> */}

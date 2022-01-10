@@ -29,6 +29,7 @@ const SearchBox = ({ refine, currentRefinement }: SearchBoxProps) => {
         value={term}
         variant="flushed"
         size="lg"
+        focusBorderColor="#eeeeee"
       />
     </FormControl>
   );
