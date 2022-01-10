@@ -1318,7 +1318,7 @@
     core-js-pure "^3.19.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.12.13", "@babel/runtime@^7.13.10":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.12.13", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.0":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.7.tgz#03ff99f64106588c9c403c6ecb8c3bafbbdff1fa"
   integrity sha512-9E9FJowqAsytyOY6LG+1KuueckRL+aQW+mKvXRXnuFGyRAyepJPmEo9vgMfXUA6O9u3IeEdv9MAkppFcaQwogQ==
@@ -1976,6 +1976,21 @@
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ==
+
+"@emotion-icons/emotion-icon@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@emotion-icons/emotion-icon/-/emotion-icon-4.1.0.tgz#587667e92a72dc3b271713eed4b72c6bf3b22df1"
+  integrity sha512-bOUbWj8DPjUK5MtRx2ApMudOnh/tasqJwa+sdRbqsZD0g0hYf0jCsTDNs/57VvGOJH2PfWDKD1jbLjwajAYT9A==
+  dependencies:
+    "@babel/runtime" "^7.14.0"
+
+"@emotion-icons/fa-solid@^3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@emotion-icons/fa-solid/-/fa-solid-3.14.0.tgz#b765d711d7aabdc0aeb3374d45861de17382a1ff"
+  integrity sha512-NEmiShaIsHouBfKcTxke1CYpzHrgZA20YXDN/c8dqxPpm6TIVS8dga/cJWBBlAxsR+2PbWMBMtC1z6Ie42zuCg==
+  dependencies:
+    "@babel/runtime" "^7.14.0"
+    "@emotion-icons/emotion-icon" "4.1.0"
 
 "@emotion/babel-plugin@^11.3.0":
   version "11.7.2"

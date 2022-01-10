@@ -1,10 +1,11 @@
 import { Flex, Heading, HStack, StackDivider } from "@chakra-ui/layout";
-import { Text } from "@chakra-ui/react";
+import { Icon, Text } from "@chakra-ui/react";
 import * as React from "react";
 import { getPostUrl, getSeriesUrl, getTagUrl } from "../../lib/util";
 import { Link } from "gatsby";
 import { format } from "date-fns";
 import { SeriesField, TagField } from "../../pages";
+import { Book } from "@emotion-icons/fa-solid";
 
 type PostEntryProps = {
   title: string;
@@ -60,7 +61,10 @@ const PostEntry = ({
         )}
         {series && (
           <Link to={getSeriesUrl(series.seriesSlug)}>
-            <Text>Series - 「 {series.name} 」</Text>
+            <Flex alignItems="center">
+              <Icon as={Book} />
+              <Text ml={2}>「 {series.name} 」</Text>
+            </Flex>
           </Link>
         )}
       </HStack>

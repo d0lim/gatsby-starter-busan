@@ -11,6 +11,7 @@
     "@chakra-ui/gatsby-plugin": "^2.0.2",
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.3",
+    "@emotion-icons/fa-solid": "^3.14.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mdx-js/mdx": "^1.6.22",

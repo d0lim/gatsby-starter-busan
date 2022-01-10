@@ -77,7 +77,6 @@ const CustomHits = connectHits(Hits);
 const HitsInIndex = ({ index }: { index: SearchIndexType }) => {
   return (
     <Index indexName={index.name}>
-      <Divider />
       <HitCount />
       <CustomHits />
     </Index>
@@ -89,6 +88,7 @@ const SearchResult = ({ indices }: SearchProps) => (
     {indices.map(index => (
       <HitsInIndex index={index} key={index.name} />
     ))}
+    <Divider mt="24px" mb="12px" />
     <StyledPoweredBy />
   </Flex>
 );
