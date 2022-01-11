@@ -20,7 +20,7 @@ const HamburgerMenuButton = () => {
         <MenuItem as={Link} to="/blog/series">
           Series
         </MenuItem>
-        <MenuItem as={Link} to="/blog/archive">
+        <MenuItem as={Link} to="/blog/about">
           Archive
         </MenuItem>
       </MenuList>

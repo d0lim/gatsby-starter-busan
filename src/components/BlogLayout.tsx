@@ -52,11 +52,11 @@ const Layout = ({ location, children }: LayoutProps) => {
           </Button>
           <Button
             as={Link}
-            to="/blog/archive"
+            to="/blog/about"
             background="#f5f5f5"
             display={{ base: "none", sm: "none", md: "inline-flex" }}
           >
-            <Text fontWeight="medium">Archive</Text>
+            <Text fontWeight="medium">About</Text>
           </Button>
           <SearchButton />
           <HamburgerMenuButton />
