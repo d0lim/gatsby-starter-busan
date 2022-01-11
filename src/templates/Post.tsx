@@ -3,7 +3,7 @@ import { Link, graphql } from "gatsby";
 
 import Layout from "../components/BlogLayout";
 import Seo from "../components/seo";
-import { Box, Divider, Flex, Heading } from "@chakra-ui/layout";
+import { Box, Divider, Flex, Heading, HStack } from "@chakra-ui/layout";
 import {
   Text,
   Image,
@@ -17,10 +17,12 @@ import {
   Td,
   Th,
   Link as ChakraLink,
+  Button,
 } from "@chakra-ui/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 import { format } from "date-fns";
+import { getTagUrl } from "../lib/util";
 
 type PostTemplateProps = {
   data: {
@@ -34,6 +36,12 @@ type PostTemplateProps = {
       };
       body: string;
       excerpt: string;
+      fields: {
+        tags: {
+          name: string;
+          tagSlug: string;
+        }[];
+      };
     };
   };
   location: Location;
@@ -166,12 +174,27 @@ const PostTemplate = ({ data, location }: PostTemplateProps) => {
           </Text>
         </Flex>
         <Divider mb="24px" />
-        <Box maxW="720px">
+        <Box maxW="720px" mb="24px">
           <MDXProvider components={mdComponents}>
             <MDXRenderer>{post.body}</MDXRenderer>
           </MDXProvider>
         </Box>
-
+        <HStack spacing={2} mb="24px">
+          {post.fields.tags.map((tag, index) => {
+            return (
+              <Button
+                as={Link}
+                to={getTagUrl(tag.tagSlug)}
+                size="sm"
+                background="#ebebeb"
+                fontWeight="light"
+                key={index}
+              >
+                #{tag.name}
+              </Button>
+            );
+          })}
+        </HStack>
         <Divider />
       </Flex>
     </Layout>
@@ -191,6 +214,12 @@ export const pageQuery = graphql`
         series
       }
       body
+      fields {
+        tags {
+          name
+          tagSlug
+        }
+      }
     }
   }
 `;
