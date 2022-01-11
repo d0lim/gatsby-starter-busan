@@ -10,6 +10,11 @@ const breakpoints = createBreakpoints({
 });
 
 const theme = {
+  fonts: {
+    heading: "Nanum Gothic",
+    body: "Nanum Gothic",
+    mono: `"Iosevka", "Nanum Gothic Coding"`,
+  },
   styles: {
     global: {
       // styles for the `body`

@@ -6,6 +6,10 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import SearchButton from "./SearchButton";
 import HamburgerMenuButton from "./MenuButton";
 
+import "@fontsource/iosevka";
+import "@fontsource/nanum-gothic";
+import "@fontsource/nanum-gothic-coding";
+
 type LayoutProps = {
   location: Location;
   children: React.ReactNode;

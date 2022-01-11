@@ -2130,6 +2130,21 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fontsource/iosevka@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@fontsource/iosevka/-/iosevka-4.5.1.tgz#4878b37a65d8c366a313034b34cdd96c334d53da"
+  integrity sha512-kZgzGW45ex5YU4Og8MbUCVUUylDJCRQp487Aw3DJlBHnrlaJMdvMdQir1f32s3UFl/XmtxAZWm2ZOXiMGrqfng==
+
+"@fontsource/nanum-gothic-coding@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/nanum-gothic-coding/-/nanum-gothic-coding-4.5.0.tgz#dd6fb3641c3df91733438cd4f8f58cc3875f4d7f"
+  integrity sha512-p2jWXIbhywZQmCxgWZSI+iYbYw4QN5iMZIhIlX0NPEk3Do06PlFF7zPJ7nlvnBLRAtM9VxQTLKGrLuiw8p5uYA==
+
+"@fontsource/nanum-gothic@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/nanum-gothic/-/nanum-gothic-4.5.0.tgz#cb2b245063a7f98fb4ed873a1543f9ab1ab50f9e"
+  integrity sha512-FRJ1By5g5QzDYCybR+yz4/AxIxA54tEMGtWlXxqCF+VKl05Yec9qSh0jdKLH6z4US8+l83RSzdFxoxY26KIqyQ==
+
 "@gatsbyjs/reach-router@^1.3.6":
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/@gatsbyjs/reach-router/-/reach-router-1.3.6.tgz#4e8225836959be247890b66f21a3198a0589e34d"

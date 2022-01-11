@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
+import { format } from "date-fns";
 
 type PostTemplateProps = {
   data: {
@@ -40,38 +41,58 @@ type PostTemplateProps = {
 
 const mdComponents = {
   h1: (props: any) => (
-    <Heading {...props} as="h1" size="2xl">
+    <Heading
+      {...props}
+      as="h1"
+      size="2xl"
+      mt="24px"
+      mb="16px"
+      lineHeight="1.25"
+      pb="0.3em"
+    >
       {props.children}
     </Heading>
   ),
   h2: (props: any) => (
-    <Heading {...props} as="h2" size="xl">
+    <Heading
+      {...props}
+      as="h2"
+      size="xl"
+      mt="24px"
+      mb="16px"
+      lineHeight="1.25"
+      pb="0.3em"
+    >
       {props.children}
     </Heading>
   ),
   h3: (props: any) => (
-    <Heading {...props} as="h3" size="lg">
+    <Heading {...props} as="h3" size="lg" mt="24px" mb="16px" lineHeight="1.25">
       {props.children}
     </Heading>
   ),
   h4: (props: any) => (
-    <Heading {...props} as="h4" size="md">
+    <Heading {...props} as="h4" size="md" mt="24px" mb="16px" lineHeight="1.25">
       {props.children}
     </Heading>
   ),
   h5: (props: any) => (
-    <Heading {...props} as="h5" size="sm">
+    <Heading {...props} as="h5" size="sm" mt="24px" mb="16px" lineHeight="1.25">
       {props.children}
     </Heading>
   ),
   h6: (props: any) => (
-    <Heading {...props} as="h6" size="xs">
+    <Heading {...props} as="h6" size="xs" mt="24px" mb="16px" lineHeight="1.25">
       {props.children}
     </Heading>
   ),
   p: (props: any) => {
     const { children } = props;
-    return <Text mb={2}>{children}</Text>;
+    return (
+      <Text mt={0} mb={2}>
+        {children}
+      </Text>
+    );
   },
   hr: (props: any) => {
     return <Divider />;
@@ -100,7 +121,17 @@ const mdComponents = {
   blockquote: (props: any) => {
     const { children } = props;
     return (
-      <Code as="blockquote" p={2}>
+      <Code
+        as="blockquote"
+        mt="12px"
+        mb="12px"
+        borderLeft="4px solid #4abdb5"
+        borderTopLeftRadius="4px"
+        borderBottomRightRadius="4px"
+        padding="1rem 1rem 1rem 2rem"
+        fontFamily="Nanum Gothic"
+        fontSize="md"
+      >
         {children}
       </Code>
     );
@@ -128,10 +159,13 @@ const PostTemplate = ({ data, location }: PostTemplateProps) => {
         description={post.frontmatter.description || post.excerpt}
       />
       <Flex as="article" className="blog-post" flexDir="column" maxWidth="100%">
-        <Flex as="header" flexDir="column" mb="48px">
+        <Flex as="header" flexDir="column" mb="24px">
           <Heading size="3xl">{post.frontmatter.title}</Heading>
-          <Text>{post.frontmatter.publishedAt}</Text>
+          <Text mt="24px" pl="8px">
+            {format(new Date(post.frontmatter.publishedAt), "yyyy. MM. dd.")}
+          </Text>
         </Flex>
+        <Divider mb="24px" />
         <Box maxW="720px">
           <MDXProvider components={mdComponents}>
             <MDXRenderer>{post.body}</MDXRenderer>
