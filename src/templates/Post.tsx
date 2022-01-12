@@ -23,6 +23,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 import { format } from "date-fns";
 import { getTagUrl } from "../lib/util";
+import TableOfContents, { ContentItems } from "../components/TableOfContents";
 
 type PostTemplateProps = {
   data: {
@@ -42,6 +43,7 @@ type PostTemplateProps = {
           tagSlug: string;
         }[];
       };
+      tableOfContents: { items: ContentItems };
     };
   };
   location: Location;
@@ -172,6 +174,9 @@ const PostTemplate = ({ data, location }: PostTemplateProps) => {
           <Text mt="24px" pl="8px">
             {format(new Date(post.frontmatter.publishedAt), "yyyy. MM. dd.")}
           </Text>
+          {/* <Box position="relative">
+            <TableOfContents items={post.tableOfContents.items} />
+          </Box> */}
         </Flex>
         <Divider mb="24px" />
         <Box maxW="720px" mb="24px">
@@ -220,6 +225,7 @@ export const pageQuery = graphql`
           tagSlug
         }
       }
+      tableOfContents(maxDepth: 3)
     }
   }
 `;
