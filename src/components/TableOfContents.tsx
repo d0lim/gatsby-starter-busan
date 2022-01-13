@@ -1,5 +1,5 @@
 import { Box, ListItem, OrderedList, Text } from "@chakra-ui/react";
-import { cloneDeep, throttle } from "lodash";
+import { cloneDeep, debounce } from "lodash";
 import * as React from "react";
 
 export type ContentItems = {
@@ -30,13 +30,24 @@ const TocEntry = ({ items, current }: TocEntryProps) => {
   return (
     <OrderedList>
       {items?.map((item, i) => {
+        const handleClick = () => {
+          const el = document.querySelector(item.url);
+          el?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        };
         if (item.items) {
           return (
             <ListItem key={i}>
               {item.index === current ? (
-                <Text color="teal.500">{item.title}</Text>
+                <Text onClick={handleClick} color="teal.500" cursor="pointer">
+                  {item.title}
+                </Text>
               ) : (
-                <Text>{item.title}</Text>
+                <Text onClick={handleClick} cursor="pointer">
+                  {item.title}
+                </Text>
               )}
               <TocEntry items={item.items} current={current} />
             </ListItem>
@@ -45,9 +56,13 @@ const TocEntry = ({ items, current }: TocEntryProps) => {
           return (
             <ListItem key={i}>
               {item.index === current ? (
-                <Text color="teal.500">{item.title}</Text>
+                <Text onClick={handleClick} color="teal.500" cursor="pointer">
+                  {item.title}
+                </Text>
               ) : (
-                <Text>{item.title}</Text>
+                <Text onClick={handleClick} cursor="pointer">
+                  {item.title}
+                </Text>
               )}
             </ListItem>
           );
@@ -104,14 +119,14 @@ const TableOfContents = ({ items }: TableOfContentsProps) => {
   };
 
   React.useEffect(() => {
-    const scrollHandler = throttle(() => {
+    const scrollHandler = debounce(() => {
       const { titles, nodes } = headings;
       const offsets = nodes.map(el => accumulateOffsetTop(el));
       const activeIndex = offsets.findIndex(
         offset => offset > window.scrollY + 0.1 * window.innerHeight
       );
       setCurrentIndex(activeIndex === -1 ? titles.length - 1 : activeIndex - 1);
-    }, 200);
+    }, 100);
     window.addEventListener(`scroll`, scrollHandler);
     return () => window.removeEventListener(`scroll`, scrollHandler);
   }, [headings]);
