@@ -28,7 +28,7 @@ type TocEntryProps = {
 
 const TocEntry = ({ items, current }: TocEntryProps) => {
   return (
-    <OrderedList>
+    <OrderedList listStyleType="none" mt={1} color="#616161">
       {items?.map((item, i) => {
         const handleClick = () => {
           const el = document.querySelector(item.url);
@@ -39,9 +39,15 @@ const TocEntry = ({ items, current }: TocEntryProps) => {
         };
         if (item.items) {
           return (
-            <ListItem key={i}>
+            <ListItem key={i} mt={1}>
               {item.index === current ? (
-                <Text onClick={handleClick} color="teal.500" cursor="pointer">
+                <Text
+                  onClick={handleClick}
+                  color="teal.500"
+                  cursor="pointer"
+                  transition="all 0.125s ease-in 0s"
+                  transform="scale(1.05)"
+                >
                   {item.title}
                 </Text>
               ) : (
@@ -54,9 +60,15 @@ const TocEntry = ({ items, current }: TocEntryProps) => {
           );
         } else
           return (
-            <ListItem key={i}>
+            <ListItem key={i} mt={1}>
               {item.index === current ? (
-                <Text onClick={handleClick} color="teal.500" cursor="pointer">
+                <Text
+                  onClick={handleClick}
+                  color="teal.500"
+                  cursor="pointer"
+                  transition="all 0.125s ease-in 0s"
+                  transform="scale(1.05)"
+                >
                   {item.title}
                 </Text>
               ) : (
@@ -152,8 +164,13 @@ const TableOfContents = ({ items }: TableOfContentsProps) => {
       width="240px"
       ml="48px"
       padding="8px"
+      display={{ base: "none", xl: "block" }}
     >
-      <Box position="sticky" top="112px">
+      <Box
+        position="sticky"
+        top="112px"
+        borderLeft="2px solid rgb(233, 236, 239)"
+      >
         <TocEntry items={itemsWithIndex} current={currentIndex} />
       </Box>
     </Box>
