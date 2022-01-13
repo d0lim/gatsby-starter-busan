@@ -1,4 +1,4 @@
-import { Box, ListItem, OrderedList } from "@chakra-ui/react";
+import { Box, ListItem, OrderedList, Text } from "@chakra-ui/react";
 import { cloneDeep, throttle } from "lodash";
 import * as React from "react";
 
@@ -8,23 +8,49 @@ export type ContentItems = {
   items?: ContentItems;
 }[];
 
+type ContentItemsWithIndex = ContentItemWithIndex[];
+
+type ContentItemWithIndex = {
+  index: number;
+  url: string;
+  title: string;
+  items?: ContentItemsWithIndex;
+};
+
 type TableOfContentsProps = {
   items: ContentItems;
 };
 
-const TocEntry = ({ items }: { items: ContentItems }) => {
+type TocEntryProps = {
+  items?: ContentItemsWithIndex;
+  current: number;
+};
+
+const TocEntry = ({ items, current }: TocEntryProps) => {
   return (
     <OrderedList>
-      {items.map((item, index) => {
-        if (item.items)
+      {items?.map((item, i) => {
+        if (item.items) {
           return (
-            <ListItem key={index}>
-              {item.title || "Item Title"}
-              <TocEntry items={item.items} />
+            <ListItem key={i}>
+              {item.index === current ? (
+                <Text color="teal.500">{item.title}</Text>
+              ) : (
+                <Text>{item.title}</Text>
+              )}
+              <TocEntry items={item.items} current={current} />
             </ListItem>
           );
-        else
-          return <ListItem key={index}>{item.title || "Item Title"}</ListItem>;
+        } else
+          return (
+            <ListItem key={i}>
+              {item.index === current ? (
+                <Text color="teal.500">{item.title}</Text>
+              ) : (
+                <Text>{item.title}</Text>
+              )}
+            </ListItem>
+          );
       })}
     </OrderedList>
   );
@@ -62,17 +88,29 @@ const TableOfContents = ({ items }: TableOfContentsProps) => {
     titles: [],
     nodes: [],
   });
+  const [currentIndex, setCurrentIndex] = React.useState<number>(-1);
+  const [itemsWithIndex, setItemsWithIndex] =
+    React.useState<ContentItemsWithIndex>();
+
+  let idx = 0;
+  const addIndexToItems = (items: ContentItems) => {
+    return items.map(item => {
+      const itemWithIndex = { ...item, index: idx };
+      idx++;
+      if (itemWithIndex.items)
+        itemWithIndex.items = addIndexToItems(itemWithIndex.items);
+      return itemWithIndex;
+    }) as ContentItemsWithIndex;
+  };
 
   React.useEffect(() => {
     const scrollHandler = throttle(() => {
       const { titles, nodes } = headings;
       const offsets = nodes.map(el => accumulateOffsetTop(el));
       const activeIndex = offsets.findIndex(
-        offset => offset > window.scrollY + 0.02 * window.innerHeight
+        offset => offset > window.scrollY + 0.1 * window.innerHeight
       );
-      console.log(
-        activeIndex === -1 ? titles[titles.length - 1] : titles[activeIndex - 1]
-      );
+      setCurrentIndex(activeIndex === -1 ? titles.length - 1 : activeIndex - 1);
     }, 200);
     window.addEventListener(`scroll`, scrollHandler);
     return () => window.removeEventListener(`scroll`, scrollHandler);
@@ -88,11 +126,21 @@ const TableOfContents = ({ items }: TableOfContentsProps) => {
       .filter(notEmpty);
 
     setHeadings({ titles, nodes });
+    setItemsWithIndex(addIndexToItems(items));
   }, [items]);
 
   return (
-    <Box position="absolute" left="100%">
-      <TocEntry items={items} />
+    <Box
+      position="absolute"
+      height="100%"
+      left="720px"
+      width="240px"
+      ml="48px"
+      padding="8px"
+    >
+      <Box position="sticky" top="112px">
+        <TocEntry items={itemsWithIndex} current={currentIndex} />
+      </Box>
     </Box>
   );
 };

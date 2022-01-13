@@ -174,12 +174,11 @@ const PostTemplate = ({ data, location }: PostTemplateProps) => {
           <Text mt="24px" pl="8px">
             {format(new Date(post.frontmatter.publishedAt), "yyyy. MM. dd.")}
           </Text>
-          {/* <Box position="relative">
-            <TableOfContents items={post.tableOfContents.items} />
-          </Box> */}
         </Flex>
         <Divider mb="24px" />
-        <Box maxW="720px" mb="24px">
+
+        <Box maxW="720px" mb="24px" position="relative">
+          <TableOfContents items={post.tableOfContents.items} />
           <MDXProvider components={mdComponents}>
             <MDXRenderer>{post.body}</MDXRenderer>
           </MDXProvider>
