@@ -1,6 +1,12 @@
 import { Box, ListItem, OrderedList, Text } from "@chakra-ui/react";
 import { cloneDeep, debounce } from "lodash";
 import * as React from "react";
+import {
+  accumulateOffsetTop,
+  flattenContentItems,
+  notEmpty,
+} from "../../lib/util";
+import TocEntry from "./TocEntry";
 
 export type ContentItems = {
   url: string;
@@ -8,103 +14,18 @@ export type ContentItems = {
   items?: ContentItems;
 }[];
 
-type ContentItemsWithIndex = ContentItemWithIndex[];
+export type ContentItemsWithIndex = ContentItemWithIndex[];
 
-type ContentItemWithIndex = {
+export type ContentItemWithIndex = {
   index: number;
   url: string;
   title: string;
   items?: ContentItemsWithIndex;
 };
 
-type TableOfContentsProps = {
+export type TableOfContentsProps = {
   items: ContentItems;
 };
-
-type TocEntryProps = {
-  items?: ContentItemsWithIndex;
-  current: number;
-};
-
-const TocEntry = ({ items, current }: TocEntryProps) => {
-  return (
-    <OrderedList listStyleType="none" mt={1} color="#616161">
-      {items?.map((item, i) => {
-        const handleClick = () => {
-          const el = document.querySelector(item.url);
-          el?.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        };
-        if (item.items) {
-          return (
-            <ListItem key={i} mt={1}>
-              {item.index === current ? (
-                <Text
-                  onClick={handleClick}
-                  color="teal.500"
-                  cursor="pointer"
-                  transition="all 0.125s ease-in 0s"
-                  transform="scale(1.05)"
-                >
-                  {item.title}
-                </Text>
-              ) : (
-                <Text onClick={handleClick} cursor="pointer">
-                  {item.title}
-                </Text>
-              )}
-              <TocEntry items={item.items} current={current} />
-            </ListItem>
-          );
-        } else
-          return (
-            <ListItem key={i} mt={1}>
-              {item.index === current ? (
-                <Text
-                  onClick={handleClick}
-                  color="teal.500"
-                  cursor="pointer"
-                  transition="all 0.125s ease-in 0s"
-                  transform="scale(1.05)"
-                >
-                  {item.title}
-                </Text>
-              ) : (
-                <Text onClick={handleClick} cursor="pointer">
-                  {item.title}
-                </Text>
-              )}
-            </ListItem>
-          );
-      })}
-    </OrderedList>
-  );
-};
-
-const accumulateOffsetTop = (el: HTMLElement | null, totalOffset = 0) => {
-  while (el) {
-    totalOffset += el.offsetTop - el.scrollTop + el.clientTop;
-    el = el.offsetParent as HTMLElement;
-  }
-  return totalOffset;
-};
-
-const flattenContentItems = (items: ContentItems) => {
-  return items.reduce((acc, item) => {
-    acc = acc.concat(item);
-    if (item.items) {
-      acc = acc.concat(flattenContentItems(item.items));
-      item.items = [];
-    }
-    return acc;
-  }, [] as ContentItems);
-};
-
-function notEmpty<T>(value: T | null | undefined): value is T {
-  return value !== null && value !== undefined;
-}
 
 const TableOfContents = ({ items }: TableOfContentsProps) => {
   if (!items) return <></>;

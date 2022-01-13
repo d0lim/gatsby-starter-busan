@@ -1,4 +1,5 @@
 import { format, isFuture } from "date-fns";
+import { ContentItems } from "../components/TableOfContents";
 import { PostEdge, PostEdges, PostNode } from "../pages/index";
 
 export function mapEdgesToNodes(data: PostEdges) {
@@ -26,4 +27,30 @@ export function getTagUrl(slug: string) {
 
 export function getSeriesUrl(slug: string) {
   return `/blog/series/${slug}`;
+}
+
+export const accumulateOffsetTop = (
+  el: HTMLElement | null,
+  totalOffset = 0
+) => {
+  while (el) {
+    totalOffset += el.offsetTop - el.scrollTop + el.clientTop;
+    el = el.offsetParent as HTMLElement;
+  }
+  return totalOffset;
+};
+
+export const flattenContentItems = (items: ContentItems) => {
+  return items.reduce((acc, item) => {
+    acc = acc.concat(item);
+    if (item.items) {
+      acc = acc.concat(flattenContentItems(item.items));
+      item.items = [];
+    }
+    return acc;
+  }, [] as ContentItems);
+};
+
+export function notEmpty<T>(value: T | null | undefined): value is T {
+  return value !== null && value !== undefined;
 }
