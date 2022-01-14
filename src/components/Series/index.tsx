@@ -46,7 +46,7 @@ const Series = ({
         <Link to={getSeriesUrl(seriesSlug)}>{seriesTitle}</Link>
       </Heading>
       <OrderedList>
-        {edges.map((edge, index) => {
+        {edges.map((edge, index) =>
           currentTitle === edge.node.frontmatter.title ? (
             <ListItem key={index} mt={1} fontWeight="bold">
               <Link
@@ -69,8 +69,8 @@ const Series = ({
                 {edge.node.frontmatter.title}
               </Link>
             </ListItem>
-          );
-        })}
+          )
+        )}
       </OrderedList>
     </Flex>
   );
