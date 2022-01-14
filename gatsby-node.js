@@ -107,6 +107,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         id,
         slug = "",
         frontmatter: { publishedAt },
+        fields: {
+          series: { seriesSlug },
+        },
       } = edge.node;
       const dateSegment = format(new Date(publishedAt), "yyyy/MM");
       const path = `/blog/${dateSegment}/${slug}`;
@@ -114,7 +117,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       createPage({
         path,
         component: blogPost,
-        context: { id },
+        context: { id, seriesSlug },
       });
     });
 

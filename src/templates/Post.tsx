@@ -22,8 +22,9 @@ import {
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 import { format } from "date-fns";
-import { getTagUrl } from "../lib/util";
+import { getTagUrl, mapEdgesToNodes } from "../lib/util";
 import TableOfContents, { ContentItems } from "../components/TableOfContents";
+import Series from "../components/Series";
 
 type PostTemplateProps = {
   data: {
@@ -42,8 +43,23 @@ type PostTemplateProps = {
           name: string;
           tagSlug: string;
         }[];
+        series: {
+          name: string;
+          seriesSlug: string;
+        };
       };
       tableOfContents: { items: ContentItems };
+    };
+    series: {
+      edges: {
+        node: {
+          slug: string;
+          frontmatter: {
+            title: string;
+            publishedAt: string;
+          };
+        };
+      }[];
     };
   };
   location: Location;
@@ -161,6 +177,7 @@ const mdComponents = {
 
 const PostTemplate = ({ data, location }: PostTemplateProps) => {
   const post = data.post;
+  const series = data.series;
 
   return (
     <Layout location={location}>
@@ -174,6 +191,14 @@ const PostTemplate = ({ data, location }: PostTemplateProps) => {
           <Text mt="24px" pl="8px">
             {format(new Date(post.frontmatter.publishedAt), "yyyy. MM. dd.")}
           </Text>
+          {post.frontmatter.series && (
+            <Series
+              currentTitle={post.frontmatter.title}
+              seriesTitle={post.fields.series.name}
+              seriesSlug={post.fields.series.seriesSlug}
+              edges={series.edges}
+            />
+          )}
         </Flex>
         <Divider mb="24px" />
 
@@ -208,7 +233,7 @@ const PostTemplate = ({ data, location }: PostTemplateProps) => {
 export default PostTemplate;
 
 export const pageQuery = graphql`
-  query PostTemplateQuery($id: String!) {
+  query PostTemplateQuery($id: String!, $seriesSlug: String) {
     post: mdx(id: { eq: $id }) {
       frontmatter {
         title
@@ -223,8 +248,25 @@ export const pageQuery = graphql`
           name
           tagSlug
         }
+        series {
+          name
+          seriesSlug
+        }
       }
       tableOfContents(maxDepth: 3)
+    }
+    series: allMdx(
+      filter: { fields: { series: { seriesSlug: { eq: $seriesSlug } } } }
+    ) {
+      edges {
+        node {
+          frontmatter {
+            title
+            publishedAt
+          }
+          slug
+        }
+      }
     }
   }
 `;
