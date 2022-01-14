@@ -47,32 +47,29 @@ const Series = ({
       </Heading>
       <OrderedList>
         {edges.map((edge, index) => {
-          if (currentTitle === edge.node.frontmatter.title)
-            return (
-              <ListItem key={index} mt={1} fontWeight="bold">
-                <Link
-                  to={getPostUrl(
-                    edge.node.frontmatter.publishedAt,
-                    edge.node.slug
-                  )}
-                >
-                  {edge.node.frontmatter.title}
-                </Link>
-              </ListItem>
-            );
-          else
-            return (
-              <ListItem key={index} mt={1}>
-                <Link
-                  to={getPostUrl(
-                    edge.node.frontmatter.publishedAt,
-                    edge.node.slug
-                  )}
-                >
-                  {edge.node.frontmatter.title}
-                </Link>
-              </ListItem>
-            );
+          currentTitle === edge.node.frontmatter.title ? (
+            <ListItem key={index} mt={1} fontWeight="bold">
+              <Link
+                to={getPostUrl(
+                  edge.node.frontmatter.publishedAt,
+                  edge.node.slug
+                )}
+              >
+                {edge.node.frontmatter.title}
+              </Link>
+            </ListItem>
+          ) : (
+            <ListItem key={index} mt={1}>
+              <Link
+                to={getPostUrl(
+                  edge.node.frontmatter.publishedAt,
+                  edge.node.slug
+                )}
+              >
+                {edge.node.frontmatter.title}
+              </Link>
+            </ListItem>
+          );
         })}
       </OrderedList>
     </Flex>
