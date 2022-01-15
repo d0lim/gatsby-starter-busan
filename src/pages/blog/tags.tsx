@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Flex, Heading, HStack } from "@chakra-ui/layout";
-import { Text } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import Layout from "../../components/BlogLayout";
 import { graphql, Link } from "gatsby";
 import { isFuture } from "date-fns";
@@ -8,7 +8,7 @@ import Seo from "../../components/seo";
 
 type TagsPageProps = {
   data: {
-    allMdx: {
+    tagData: {
       edges: {
         node: {
           frontmatter: {
@@ -23,12 +23,19 @@ type TagsPageProps = {
         };
       }[];
     };
+    groupData: {
+      group: {
+        totalCount: number;
+        fieldValue: string;
+      }[];
+    };
   };
   location: Location;
 };
 
 const TagsPage = ({ data, location }: TagsPageProps) => {
-  const postEdges = data.allMdx.edges;
+  const postEdges = data.tagData.edges;
+  const group = data.groupData.group;
   const tags = postEdges
     .filter(edge => !isFuture(new Date(edge.node.frontmatter.publishedAt)))
     .map(edge => edge.node.fields.tags)
@@ -54,9 +61,19 @@ const TagsPage = ({ data, location }: TagsPageProps) => {
       </Heading>
       <HStack spacing={4}>
         {tags.map(tag => (
-          <Link to={tag.tagSlug}>
-            <Text>#{tag.name}</Text>
-          </Link>
+          <Button
+            as={Link}
+            to={tag.tagSlug}
+            background="#ebebeb"
+            fontWeight="light"
+          >
+            <Flex alignItems="flex-end">
+              <Text>#{tag.name}</Text>
+              <Text fontWeight="bold" ml={1} fontSize="xs">
+                ({group.find(e => e.fieldValue === tag.name)?.totalCount})
+              </Text>
+            </Flex>
+          </Button>
         ))}
       </HStack>
     </Layout>
@@ -65,7 +82,7 @@ const TagsPage = ({ data, location }: TagsPageProps) => {
 
 export const pageQuery = graphql`
   query TagsPageQuery {
-    allMdx(
+    tagData: allMdx(
       filter: { slug: { ne: null }, frontmatter: { publishedAt: { ne: null } } }
       sort: { fields: frontmatter___publishedAt, order: DESC }
     ) {
@@ -81,6 +98,12 @@ export const pageQuery = graphql`
             }
           }
         }
+      }
+    }
+    groupData: allMdx {
+      group(field: frontmatter___tags) {
+        totalCount
+        fieldValue
       }
     }
   }
