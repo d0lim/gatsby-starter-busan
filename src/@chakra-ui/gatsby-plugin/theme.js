@@ -11,9 +11,9 @@ const breakpoints = createBreakpoints({
 
 const theme = {
   fonts: {
-    heading: "Nanum Gothic",
-    body: "Nanum Gothic",
-    mono: `"Iosevka", "Nanum Gothic Coding"`,
+    heading: `"Nanum Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
+    body: `"Nanum Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
+    mono: `"Iosevka", "Nanum Gothic Coding", monospace`,
   },
   styles: {
     global: {
