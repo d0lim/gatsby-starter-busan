@@ -185,7 +185,13 @@ const PostTemplate = ({ data, location }: PostTemplateProps) => {
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
-      <Flex as="article" className="blog-post" flexDir="column" maxWidth="100%">
+      <Flex
+        as="article"
+        className="blog-post"
+        flexDir="column"
+        width="100%"
+        maxWidth="720px"
+      >
         <Flex as="header" flexDir="column" mb="24px">
           <Heading size="3xl">{post.frontmatter.title}</Heading>
           <Text mt="24px" pl="8px">
