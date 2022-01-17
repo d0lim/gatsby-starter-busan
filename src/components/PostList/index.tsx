@@ -1,7 +1,6 @@
 import { Flex, Center, Square, Box, Text, Stack } from "@chakra-ui/layout";
 import { throttle } from "lodash";
 import * as React from "react";
-import useInfiniteScroll from "../../hooks/useIntersectionObserver";
 import { PostNode } from "../../pages";
 import PostEntry from "./PostEntry";
 
