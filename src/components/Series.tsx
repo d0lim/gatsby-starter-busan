@@ -9,7 +9,7 @@ import {
 import { Book } from "@emotion-icons/fa-solid";
 import { Link } from "gatsby";
 import * as React from "react";
-import { getPostUrl, getSeriesUrl } from "../../lib/util";
+import { getPostUrl, getSeriesUrl } from "../lib/util";
 
 type SeriesProps = {
   currentTitle: string;
