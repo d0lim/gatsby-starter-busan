@@ -32,6 +32,7 @@ const Series = ({
   seriesSlug,
   edges,
 }: SeriesProps) => {
+  const [expand, setExpand] = React.useState<boolean>(false);
   return (
     <Flex
       flexDir="column"
@@ -45,33 +46,44 @@ const Series = ({
         <Icon as={Book} mr={2} />
         <Link to={getSeriesUrl(seriesSlug)}>{seriesTitle}</Link>
       </Heading>
-      <OrderedList>
-        {edges.map((edge, index) =>
-          currentTitle === edge.node.frontmatter.title ? (
-            <ListItem key={index} mt={1} fontWeight="bold">
-              <Link
-                to={getPostUrl(
-                  edge.node.frontmatter.publishedAt,
-                  edge.node.slug
-                )}
-              >
-                {edge.node.frontmatter.title}
-              </Link>
-            </ListItem>
-          ) : (
-            <ListItem key={index} mt={1}>
-              <Link
-                to={getPostUrl(
-                  edge.node.frontmatter.publishedAt,
-                  edge.node.slug
-                )}
-              >
-                {edge.node.frontmatter.title}
-              </Link>
-            </ListItem>
-          )
-        )}
-      </OrderedList>
+      {expand ? (
+        <>
+          <OrderedList pl={4}>
+            {edges.map((edge, index) =>
+              currentTitle === edge.node.frontmatter.title ? (
+                <ListItem key={index} mt={1} fontWeight="bold">
+                  <Link
+                    to={getPostUrl(
+                      edge.node.frontmatter.publishedAt,
+                      edge.node.slug
+                    )}
+                  >
+                    {edge.node.frontmatter.title}
+                  </Link>
+                </ListItem>
+              ) : (
+                <ListItem key={index} mt={1}>
+                  <Link
+                    to={getPostUrl(
+                      edge.node.frontmatter.publishedAt,
+                      edge.node.slug
+                    )}
+                  >
+                    {edge.node.frontmatter.title}
+                  </Link>
+                </ListItem>
+              )
+            )}
+          </OrderedList>
+          <Flex mt={4} cursor="pointer" onClick={() => setExpand(false)}>
+            ▲ Collapse post list
+          </Flex>
+        </>
+      ) : (
+        <Flex cursor="pointer" onClick={() => setExpand(true)}>
+          ▶ Expand post list
+        </Flex>
+      )}
     </Flex>
   );
 };
