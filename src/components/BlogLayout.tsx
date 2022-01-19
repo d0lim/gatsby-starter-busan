@@ -9,6 +9,7 @@ import HamburgerMenuButton from "./MenuButton";
 import "@fontsource/iosevka";
 import "@fontsource/nanum-gothic";
 import "@fontsource/nanum-gothic-coding";
+import ScrollTopButton from "./ScrollTopButton";
 
 type LayoutProps = {
   location: Location;
@@ -72,6 +73,7 @@ const Layout = ({ location, children }: LayoutProps) => {
           Gatsby
         </Anchor>
       </Flex>
+      <ScrollTopButton />
     </Flex>
   );
 };

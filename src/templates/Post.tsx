@@ -25,6 +25,7 @@ import { format } from "date-fns";
 import { getTagUrl, mapEdgesToNodes } from "../lib/util";
 import TableOfContents, { ContentItems } from "../components/TableOfContents";
 import Series from "../components/Series";
+import ScrollTopButton from "../components/ScrollTopButton";
 
 type PostTemplateProps = {
   data: {
