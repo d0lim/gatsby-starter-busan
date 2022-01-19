@@ -26,6 +26,7 @@ import { getTagUrl, mapEdgesToNodes } from "../lib/util";
 import TableOfContents, { ContentItems } from "../components/TableOfContents";
 import Series from "../components/Series";
 import ScrollTopButton from "../components/ScrollTopButton";
+import Utterances from "../components/Utterances";
 
 type PostTemplateProps = {
   data: {
@@ -232,6 +233,7 @@ const PostTemplate = ({ data, location }: PostTemplateProps) => {
           })}
         </HStack>
         <Divider />
+        <Utterances repo="d0lim/blog-comments" />
       </Flex>
     </Layout>
   );

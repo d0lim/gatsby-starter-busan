@@ -14,11 +14,19 @@ import ScrollTopButton from "./ScrollTopButton";
 type LayoutProps = {
   location: Location;
   children: React.ReactNode;
+  background?: string;
 };
 
-const Layout = ({ location, children }: LayoutProps) => {
+const Layout = ({ location, children, background }: LayoutProps) => {
   return (
-    <Flex flexDir="column" alignItems="center" pl="12px" pr="12px">
+    <Flex
+      flexDir="column"
+      alignItems="center"
+      pl="12px"
+      pr="12px"
+      height="100vh"
+      background={background}
+    >
       <Flex
         as="header"
         width="100%"
